@@ -1,1 +1,0 @@
-# NPC2022-GNN_Comparation
