@@ -1,1 +1,34 @@
-\section{Experiment}
+\section{Evaluation (3 pages)}
+\label{sec:evaluation}
+
+\subsection{Experiment Setup}
+\label{sec:setup}
+
+% 偏小的数据集（单个GPU放得下）(6-8个)用full graph training，大的数据集（1-2个）用mini-batch training
+Hardware and software configurations, gnn configurations, graph datasets, comparison metrics ...
+
+\subsection{Framework Comparison}
+\label{sec:frameworkcomp}
+
+% 注意说明用EasyCompare才可以做到框架之间的公正对比和可视化，方便用户做出框架选择和性能分析
+
+(on V100) Compare PyG with DGL, including execution time, GPU utilization, memory usage ...
+
+Analyse the reasons of experiment results, from the perspective of framework design (e.g., graph operator implementation)
+
+\subsubsection{Full-graph Training}
+
+\subsubsection{Mini-batch Training}
+
+\subsection{Case Study: Cloud GPU Selection}
+\label{sec:casestudy}
+
+% 注意说明用EasyCompare可以方便地输出不同GPU的性能对比，方便用户做出GPU选择
+
+(only full-graph training) Compare V100 with A100, considering pure performance and cost efficiency
+
+Analyse the reasons of experiment results, from the perspective of hardware details, computational characteristics of GNNs
+
+\subsubsection{Pure Performance}
+
+\subsubsection{Cost Efficiency}
