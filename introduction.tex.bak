@@ -8,6 +8,4 @@ It's important to evaluate the performance of GNN models. On the one hand, the c
 
 We ascertain two major challenges of comparing the performance of GNN models. First, language styles vary greatly under different frameworks. Different frameworks have different interface definitions and code organization structures for the implementation of GNN. Second, lack of efficient performance comparison analysis tools. Multiple GNN frameworks ,hardware devices and GNN models are used during comparison, which is a huge workload to record and organize various running data.
 
-To this end, we propose EasyCompare to increase efficiency of comparison and help to analyse results. First, we propose a Domain Specific Language (DSL) called GUC (GNN Unified language based on C++). We are able to define various GNN models on GUC DSL conveniently. Then, we propose a code conversion tool to automatically convert GUC DSL into runnable Python code under DGL and PyG frameworks. Finally, we propose an integrate system to run GNN models on different devices and record the operating data.
-
-Based on EasyCompare, we conduct extensive experiment to explore the factors that influence the performance of GNN models. The results show that... 
+To this end, we propose EasyCompare to increase efficiency of comparison and help to analyse results, 
