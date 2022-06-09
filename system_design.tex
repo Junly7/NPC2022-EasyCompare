@@ -2,3 +2,66 @@
 \label{sec:system}
 
 % 突出学术上的贡献，淡化系统的工程实现；详尽说明系统支持的功能
+
+In order to integrate the functions of model code conversion, automatic deployment training and visualization of multi-dimensional analysis results, a fully automated function integration system was designed in this experiment.
+Similarly, OctoML aims to improve performance, speed up time-to-market, and minimize application latency while reducing deployment costs to provide a better user experience.
+However, it is a pity that the platform mainly focuses on general deep learning model and has not made relevant support for GNN.
+As the research objective of this paper, this system is committed to providing convenience for the code conversion and comparative training of graph neural network.
+It can also provide cloud multi-GPU, CPU hardware resource scheduling and cost/efficiency analysis, and provide us with model parameter optimization direction prediction and GPU hardware resource bidding recommendation.
+
+\subsection{Local and remote multi-GPU resource scheduling}
+
+In order to make the experimental results more universal, it is often not enough to train on the same GPU.
+Secondly, the loss of support for multi-GPU will greatly affect the training of multi-task , reducing the time efficiency of experiment.
+Therefore, it is necessary for the system to support local and remote multi-GPU resource scheduling.
+Since hardware resources can be local or remote, this involves unifying and allocating data files and ensuring data consistency during task execution.
+For local GPU resources, the system can directly allocate tasks and perform operations on hardware resources after obtaining permissions.
+For data resources, the system can directly send, receive, and allocate data locally. After task execution, the system obtains the result information and enters the result analysis.
+
+
+For remote data resources, we need to unify them through SFTP protocol, that is, before performing training, the master host (i.e. the host where the experimental system is located) needs to send the training data file (i.e. the Python file obtained by the code generation step, which contains the generated GNN model) to the slave host.
+During the training process, log information and result information files are generated.
+Part of the log information can be directly directed (as described in the remote GPU resources later) to the master host.
+The remaining valid result information files are also sent to the master host through SFTP protocol for analysis.
+For remote GPU resources, the master host experimental system executes the script files that have been deployed on the remote server through SSH remote execution commands, and uses redirection to direct the intermediate information of the program to the local.
+
+\subsection{Calculation of GPU utilization}
+
+For the calculation scheme of GPU utilization, we adopt the method of periodically asking 'nvidia-smi' and obtaining the mean value, as shown in the following command example: `nvidia-smi --query -- gpu=utilization. Gpu --format= CSV --loop=1`.
+It will output the current GPU utilization as a percentage every second.
+At the beginning of each training task, GPU utilization statistics are collected at the same time.
+After the task is completed, the mean value of several records is calculated to represent the GPU resource utilization of the training task.
+
+\subsection{Cost-efficiency comparison of different GPU resources}
+
+The computing characteristics of GNN are different from those of general neural networks, so the performance of GNN under different GPUs is also different from that of general neural networks.
+This experiment will compare the hardware performance on different GPU resources based on different GNN frameworks and datasets.
+In this paper, cost refers to the overhead of achieving a standard (i.e. it can be understood as performance per dollar), and efficiency refers to the standard to be achieved.
+Since cost-efficiency focuses on the performance efficiency brought about by the interaction between GNN framework and GPU hardware resource architecture, that is, it emphasizes on the hardware computing efficiency of hardware processing GNN framework, so training accuracy is not taken as the comparison standard of "efficiency" in this paper.
+This is also because the speed of training convergence or the time required to achieve the same accuracy is not only related to GNN framework and GPU hardware resources, but also closely connected with the design of GNN model and the type of data set.
+Since the time required to train the same epoches is separated from the accuracy, it can be regarded as only related to the computational efficiency, so the standard to be compared in this experiment is defined as the time required to train the same epoches, which is defined as ET (epoch per second).
+And then we can figure out the formula for cost-efficiency is CE=ET/cos.
+Of course, the experiment will give the accuracy data under different comparison conditions for secondary reference.
+
+
+
+In addition, based on real experimental data, the experimental system provides a prediction of the cost of renting cloud GPU computing resources, which will be explained in the experimental section.
+
+\subsection{System function synthesis}
+
+As mentioned above, the whole system integrates three main functions, including automatic generation of model code implemented under DGL and PyG according to GNN DSL, automatic deployment training and visual multidimensional result analysis.
+The whole system adopts the way of back and front end separation, respectively representing the control calculation logic and interaction, visual presentation.
+The realization of system functions are supported by the back end control calculation logic, and by the front end to interact and visual display.
+
+\textbf{GNN DSL to model code transformation and automated deployment training:}
+The model description interface written in GNN DSL is passed to the model automatic transformation tool in backend, which translates it into GNN model code based on DGL and PyG.
+Before submitting training, data sets, epoches and type of GPU to be used for training should be selected (this involves multi-GPU resource scheduling mentioned in section 1 of this chapter).
+After collecting the information above, the backend will automatically organize it into executable codes and put it into training.
+The console information during training is fed back to the frontend for real-time monitoring.
+
+\textbf{Visualization of multidimensional result analysis:}
+The system will collect the detailed data obtained from GNN model training under DGL and PyG, and use it to calculate GPU utilization rate (mentioned in Section 2 of this chapter), compare the performance of different GPU resources (mentioned in Section 3 of this chapter), and analyze the running details of operators and kernel functions.
+Using the Pytorch Profiler tool, the time and proportion of hardware resources occupied by the operators used during training can be obtained, information is the same for kernel functions.
+System will treat the source data for analysis and will present the comparison of operator and kernel information under DGL and PyG in pie charts and tables, clear and intuitive.
+In addition, there is a comparative analysis of the same operators involved in the two frames.
+By analyzing the same operator involved in the two frames, we can further study the different characteristics of the two frames in dealing with the same model.
