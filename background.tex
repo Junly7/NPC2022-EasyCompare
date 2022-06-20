@@ -3,11 +3,55 @@
 
 \subsection{Graph Neural Networks}
 \label{sec:gnn}
+Graph Neural Networks (GNNs) works directly on graph-structured data, filling the gap in training neural works on non-Euclidean data. The core idea of GNNs is to collect and aggregate the structural information of the graph to extract the intrinsic features, so as to predict specific node attributes, connection attributes between nodes, generate the invisible part of graphs, etc.
 
-GCN~\cite{kipf2016semi}, SAGE~\cite{hamilton2017inductive}, GAT~\cite{velivckovic2017graph}, GIN~\cite{xu2018powerful}
+Popular GNN models include GCN~\cite{kipf2016semi}, SAGE~\cite{hamilton2017inductive}, GAT~\cite{velivckovic2017graph}, GIN~\cite{xu2018powerful}, etc. Generally, we summarize the propagation rule of these GNN models as follows. Let $\mathcal{G}(\mathcal{V}, \mathcal{E})$ be a graph with nodes $\mathcal{V}$ and edges $\mathcal{E}$, $h_i \in \mathbb{R}^{d}$ be the feature vector of node $v_i$,  $\mathcal{N}_i$ be the neighbor list of node $v_i$, $\textbf{W}$ be a layer-specific weight matrix and $\sigma \left( \cdot \right)$ be a non-linear activation function.
+
+\subsubsection{Graph Convolutional Network (GCN)~\cite{kipf2016semi}} In GCN models, the definition of the propagation rule at layer $k$ is as follows:
+\begin{equation}\label{eq:gcn}
+h^{(k)}_i = \sigma \left( \sum_{j \in \mathcal{N}_i} \frac{1}{c_{ij}}\textbf{W}^{(k-1)}h^{(k-1)}_j \right)
+\end{equation}
+where $c_{ij}$ is an appropriate normalization constant for the edge $(v_i, v_j)$.
+
+\subsubsection{GraphSAGE~\cite{hamilton2017inductive}} GraphSAGE follows the same propagation rule as GCN. Different from GCN using full neighborhood sets in each iteration, GraphSAGE draw different uniform samples of fixed-size set of neighbors at each iteration.
+
+\subsubsection{Graph Attention Newtork (GAT)~\cite{velivckovic2017graph}} GAT proposes a masked self-attentional layer with \emph{multi-head attention}. Specifically, the graph attention layer with $K$ independent attention  mechanisms ia as follows:
+\begin{equation}\label{eq:gat}
+h^{'}_i = \Vert^K_{k=1} \sigma \left( \sum_{j \in \mathcal{N}_i} \left( \alpha^k_{ij}\textbf{W}h_j \right) \right)
+\end{equation}
+where $h^{'}_i$ is the output of the attention layer, $\Vert$ represents concatenation, $\alpha_{ij}$ are normalized attention coefficients computed by the $k$-th attention mechanism.
+
+\subsubsection{Graph Isomorphism Network (GIN)~\cite{xu2018powerful}} The propagation rule of GIN at layer $k$ is defined as follows:
+\begin{equation}\label{eq:gin}
+h^{(k)}_i = {\rm MLP}^{(k)} \left( \left( 1+\epsilon^{(k)} \right) \cdot h^{(k-1)}_i + \sum_{j \in \mathcal{N}_i} h^{(k-1)}_j \right)
+\end{equation}
+where MLP is a multi-layer perceptrons and $\epsilon^{(k)}$ is a learnable parameter or a fixed scalar.
 
 \subsection{GNN Frameworks}
 \label{sec:framework}
+Support for GNN in ML frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}) is increasing in the form of libraries/extensions. Popular libraries/extensions for GNN include PyTorch Geometric (PyG)~\cite{wang2019deep} and Deep Graph Library (DGL)~\cite{fey2019fast}, which provides customized GNN kernels with APIs supporting programming.
 
-PyG~\cite{fey2019fast}, DGL~\cite{wang2019deep}
+\subsubsection{PyTorch Geometric (PyG)~\cite{fey2019fast}} PyTorch Geometric (PyG) is a geometric deep learning extension library for PyTorch. In PyG, GNN convolutional operators are expressed as a neighborhood aggregation or message passing scheme~\cite{gilmer2017neural}.
+\begin{equation}\label{eq:pyg}
+h^{'}_i=\gamma \left( h_i, \Box _{j \in \mathcal{N}_i} \phi \left( h_i, h_j, e_{j,i} \right) \right)
+\end{equation}
+where $\Box$ denotes a differentiable, permutation invariant function, e.g. sum, mean or max, $\gamma$ and $\phi$ denote differentiable functions, e.g. MLPs and $e_{j,i}$ is an edge feature of edge $(j,i)$. PyG provides users with a general MessagePassing interface to implement new research ideas by defining the methods $\Box$, $\gamma$ and $\phi$. What's more, many proposed neighborhood aggregation functions have been integrated into PyG, including GCN, GraphSAGE, GAT and GIN.
+
+\subsubsection{Deep Graph Library (DGL)~\cite{wang2019deep}} Deep Graph Library (DGL) is a graph neural network framework based on multiple DL frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}). DGL follows a message passing paradigm. Specifically,  Let $\mathcal{G}(\mathcal{V}, \mathcal{E})$ be a graph with nodes $\mathcal{V}$ and edges $\mathcal{E}$. Let $x_v \in \mathbb{R}^{d_1}$ be the feature of node $v$ and $w_e \in \mathbb{R}^{d_1}$ be the feature of edge $(u, e, v)^2$. The message passing paradigm defines two computation pattern at step $t+1$:
+\begin{equation}\label{eq:dgl_edge_wise}
+m^{(t+1)}_e = \phi (x^{(t)}_v , x^{(t)}_u , w^{(t)}_e), (u,e,v)\in \mathcal{E}
+\end{equation}
+\begin{equation}\label{eq:dgl_node_wise}
+x^{(t+1)}_v = \psi (x^{(t)}_v , \rho (\{m^{(t+1)}_e : (u,e,v)\in \mathcal{E}\})
+\end{equation}
+Here, Equation \ref{eq:dgl_edge_wise} represents edge-wise computation and Equation \ref{eq:dgl_node_wise} represents node-wise computation. In the equations, $\phi$ is a message function defined on each edges, $\psi$ is an update function defined on each node and $\rho$ is a reduce function.
+
+DGL distills the message passing paradigm into two generalized sparse tensor operations: generalized SDDMM (g-SDDMM) and generalized SpMM (g-SpMM). Given a graph $\mathcal{G}(\mathcal{V}, \mathcal{E})$ with nodes $\mathcal{V}$ and edges $\mathcal{E}$, g-SDDMM and g-SpMM primitives are defined as follows.
+\begin{center}
+g-SDDMM$_{\mathcal{G},\phi_m}:\mathbb{R}^{\left| \mathcal{V} \right| \times d_1}, \mathbb{R}^{\left| \mathcal{V} \right| \times d_2}, \mathbb{R}^{\left| \mathcal{E} \right| \times d_3} \mapsto \mathbb{R}^{\left| \mathcal{E} \right| \times d_4}$
+\end{center}
+\begin{center}
+g-SpMM$_{\mathcal{G},\phi_z,\rho}:\mathbb{R}^{\left| \mathcal{V} \right| \times d_1}, \mathbb{R}^{\left| \mathcal{V} \right| \times d_2}, \mathbb{R}^{\left| \mathcal{E} \right| \times d_3} \mapsto \mathbb{R}^{\left| \mathcal{E} \right| \times d_4}$
+\end{center}
+where $\phi_m$ and $\phi_z$ are message functions and $\rho$ is a reduce function. These two primitives play a key role in GNN computations.
 

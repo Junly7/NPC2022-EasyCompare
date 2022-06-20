@@ -1,0 +1,51 @@
+\section{Code Transformer (1.5 pages)}
+\label{sec:codetran}
+% 鉴于代码生成主要是LLVM Clang自带的功能，这里专注于代码转换
+In this section, we propose a code transformer based on LLVM Clang to transform GUC DSL codes into executable Python codes of DGL and PyG. In order to fairly compare performance of GNN models in different GNN frameworks (e.g. DGL and PyG), the core idea of the code transformer is to obtain networks in different GNN frameworks that share the same structure as defined in GUC DSL. The solution is to transform the interface defined in GUC DSL (e.g. GCNConv) into corresponding interfaces (e.g. GraphConv in DGL and GCNConv in PyG) with necessary parameters to guarantee the same and function.
+
+To transform codes, we use Clang, the frontend of LLVM compiler, to modify the origin code. Fig.\ref{fig:gcn_python} shows an example of how our code transformer work on the GUC DSL code in Fig.\ref{fig:gcn_guc}. We mark the important revised part, revealing that code transformer adds some fundamental syntax details and reduce the unnecessary part to change GUC DSL into executable Python code. More importantly, code transformer automatically replace critical GNN interfaces by the exact interfaces in GNN frameworks with corresponding parameters to keep same function. 
+
+\lstset{
+emph={self,GraphConv,nn,bias,norm,normalize,g,edge_index},
+emphstyle=\color{blue}
+}
+\begin{figure}[!ht]
+  \centering
+  \begin{minipage}[c]{1\textwidth}
+    \begin{lstlisting}
+class NET(nn.Module):
+  def __init__(self,in_feat,out_feat):
+    super().__init__()
+    self.conv1=GraphConv(in_feat,16,bias=True,norm=True)
+    self.conv2=GraphConv(16,out_feat,bias=False,norm=True)
+    self.relu1=nn.ReLU()
+    self.relu2=nn.LeakyReLU(0.5)
+
+  def forward(self, g, h):
+    h=self.relu1(self.conv1(g,h))
+    h=self.relu2(self.conv2(g,h))
+    return h;
+    \end{lstlisting}
+    \subcaption{\centering GCN implementation in DGL}
+  \end{minipage}
+
+  \begin{minipage}[c]{1\textwidth}
+    \begin{lstlisting}
+class NET(nn.Module):
+  def __init__(self,in_feat,out_feat):
+    super().__init__()
+    self.conv1=GCNConv(in_feat,16,bias=True,normalize=True)
+    self.conv2=GCNConv(16,out_feat,bias=False,normalize=True)
+    self.relu1=nn.ReLU()
+    self.relu2=nn.LeakyReLU(0.5)
+
+  def forward(self,edge_index,h):
+    h=self.relu1(self.conv1(h,edge_index))
+    h=self.relu2(self.conv2(h,edge_index))
+    return h
+    \end{lstlisting}
+    \subcaption{\centering GCN implementation in PyG}
+  \end{minipage}
+  \caption{Code transformation of the GCN example}
+  \label{fig:gcn_python}
+\end{figure}
