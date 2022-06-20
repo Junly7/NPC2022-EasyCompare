@@ -72,19 +72,36 @@ Before submitting training, data sets, epoches and type of GPU to be used for tr
 After collecting the information above, the backend will automatically organize it into executable codes and put it into training.
 The console information during training is fed back to the frontend for real-time monitoring.
 
-\begin{figure}[htpb]
-    \centering
-    \subfigure[comparison of operators with pie chart]{
+
+%\begin{figure}
+%    \centering
+%    \subfigure[comparison of operators with pie chart]{
+%        \label{fig:pie_op_compare}
+%        \includegraphics[width=0.47\textwidth]{images/pie_op_compare.jpg}
+%    }
+%    \subfigure[same operator comparison]{
+%        \label{fig:same_op_compare}
+%        \includegraphics[width=0.47\textwidth]{images/same_op_compare.png}
+%    }
+%    \caption{result comparison}
+%    \label{fig:result_comparison}
+%\end{figure}
+\begin{figure}[!h]
+    \begin{minipage}[c]{0.47\textwidth}
+        \centering
+        \includegraphics[width=1\textwidth]{images/pie_op_compare.jpg}
+        \subcaption{\centering comparison of operators with pie chart}
         \label{fig:pie_op_compare}
-        \includegraphics[width=0.47\textwidth]{images/pie_op_compare.jpg}
-    }
-    \subfigure[same operator comparison]{
+    \end{minipage}
+    \begin{minipage}[c]{0.47\textwidth}
+        \includegraphics[width=1\textwidth]{images/same_op_compare.png}
+        \subcaption{\centering same operator comparison}
         \label{fig:same_op_compare}
-        \includegraphics[width=0.47\textwidth]{images/same_op_compare.png}
-    }
-    \caption{result comparison}
+    \end{minipage}
+    \caption{\centering result comparison}
     \label{fig:result_comparison}
 \end{figure}
+
 
 \textbf{Visualization of multidimensional result analysis:}
 The system will collect the detailed data obtained from GNN model training under DGL and PyG, and use it to calculate GPU utilization rate (mentioned in Section 2 of this chapter), compare the performance of different GPU resources (mentioned in Section 3 of this chapter), and analyze the running details of operators and kernel functions.
