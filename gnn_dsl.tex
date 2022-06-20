@@ -4,13 +4,13 @@ In this section, we propose a Domain Specific Language (DSL) called GUC (GNN Uni
 
 \subsection{Code Block}
 \label{subsec:codeblock}
-To define various GNN models on GUC DSL, we need use the code block, which will be transformed into executable Python codes on DGL/PyG (discussed in Section \ref{sec:codetran}). Fig. \ref{fig:codeblock} shows the code block for network definition on GUC DSL. The code block consists of three fundamental parts:
+To define various GNN models on GUC DSL, we need to use the code block, which will be transformed into executable Python codes on DGL/PyG (discussed in Section \ref{sec:codetran}). Fig. \ref{fig:codeblock} shows the code block for network definition on GUC DSL. The code block consists of three fundamental parts:
 
-(a) Variables definition. Define every variable that will be used later, such as GNN convolutions, activations, dropouts.
+\textbf{(a) Variables definition.} Define every variable that will be used later, such as GNN convolutions, activations, dropouts.
 
-(b) Variables initialization. Initialize the variables defined with appropriate parameters.
+\textbf{(b) Variables initialization.} Initialize the variables defined with appropriate parameters with the function parameters \textsl{in\_feat} and \textsl{out\_feat}, which are determined by the datasets and users don't need to alter.
 
-(c) Forward propagation definition. Define the forward propagation of the neural network with input feature tensor h and variables initialized and finally make sure return one exact output of the neural network, such as tensor h.
+\textbf{(c) Forward propagation definition.} Define the forward propagation of the neural network with input feature tensor h and variables initialized and finally make sure return one exact output of the neural network, such as tensor h.
 
 %\lstset{
 %caption={Code block for network definition in GUC DSL},
@@ -39,7 +39,7 @@ class NET {
 
 \subsection{NN APIs}
 \label{subsec:nnapis}
-In this section, we introduce some useful NN APIs on GUC DSL as well as its usage, including GNN convolution, activation and Mini-batch. Besides, GUC DSL also contains other APIs for GNN implement, such as dropout, linear, etc.
+In this section, we introduce some useful NN interfaces on GUC DSL as well as its usage, including GNN convolution and activation. Besides, GUC DSL also contains other interfaces for a better GNN implement, such as dropout, linear, Mini-batch, etc.
 
 %\textbf{GNN Convolution.}
 \subsubsection{GNN Convolution} GUC DSL defines several GNN convolution interfaces, including \textsl{GCNConv}, \textsl{SAGEConv}, \textsl{GATConv} and \textsl{GINConv}, respectively refers to the GNN layer API of GCN, GraphSAGE, GAT and GIN. Each interface has at least one initialization function for neural network layer definition and a forward propagation function for processing input tensor. The forward propagation function is defined as follows:
@@ -48,7 +48,7 @@ In this section, we introduce some useful NN APIs on GUC DSL as well as its usag
 \textbf{\textsl{Conv.in}}:$(init:W, f:X\rightarrow Y, in: X)\rightarrow Y$
 \end{center}
 
-\noindent The forward propagation function represents neural networks's inference function, which computes with the input feature tensor and the weight matrix and returns an output tensor. The GNN convolution interfaces later will be transformed to corresponding interfaces in DGL and PyG framework and meanwhile keep the function alignment under different GNN framework, which will be discussed in Section \ref{sec:codetran}.
+\noindent The forward propagation function represents neural networks's inference function, which computes with the input feature tensor and the weight matrix and returns an output tensor. The GNN convolution interfaces later will be transformed to corresponding interfaces in DGL and PyG framework and meanwhile keep the function alignment on different GNN framework, which will be discussed in Section \ref{sec:codetran}.
 
 %\textbf{Activation Function.}
 \subsubsection{Activation Function} The activation function interfaces in GUC DSL contains \textsl{ReLU}, \textsl{LeakyReLU}, \textsl{Tanh}, \textsl{ELU}, etc. Similar to GNN convolution interfaces, each activation function interface is with a tensor process function:
@@ -61,11 +61,11 @@ In this section, we introduce some useful NN APIs on GUC DSL as well as its usag
 
 \subsection{A Example: GCN}
 \label{subsec:gcn_guc}
-Fig.\ref{fig:gcn_guc} shows a example model of GCN in GUC DSL. The model defines two simple GCN layers with a activation function each layer. The initialization functions of \textsl{GCNConv} and \textsl{LeakyReLU} are defined as follows:
+Fig.\ref{fig:gcn_guc} shows an example of GCN implementation on GUC DSL. The model defines two simple GCN layers with a activation function each layer. The initialization functions of \textsl{GCNConv} and \textsl{LeakyReLU} are defined as follows:
 
 \begin{center}
 \textbf{\textsl{GCNConv}}:$({\rm int}\; in\_feat, {\rm int}\; out\_feat, {\rm bool}\; bias, {\rm bool}\; normalize)$ \\
-\textbf{\textsl{LeakyReLU}}:$({\rm double}\; negative_slope)$
+\textbf{\textsl{LeakyReLU}}:$({\rm double}\; negative\_slope)$
 \end{center}
 
 \begin{figure}

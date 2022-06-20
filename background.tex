@@ -15,7 +15,7 @@ where $c_{ij}$ is an appropriate normalization constant for the edge $(v_i, v_j)
 
 \subsubsection{GraphSAGE~\cite{hamilton2017inductive}} GraphSAGE follows the same propagation rule as GCN. Different from GCN using full neighborhood sets in each iteration, GraphSAGE draw different uniform samples of fixed-size set of neighbors at each iteration.
 
-\subsubsection{Graph Attention Newtork (GAT)~\cite{velivckovic2017graph}} GAT proposes a masked self-attentional layer with \emph{multi-head attention}. Specifically, the graph attention layer with $K$ independent attention  mechanisms ia as follows:
+\subsubsection{Graph Attention Newtork (GAT)~\cite{velivckovic2017graph}} GAT proposes a masked self-attentional layer with \emph{multi-head attention}. Specifically, the graph attention layer with $K$ independent attention  mechanisms is as follows:
 \begin{equation}\label{eq:gat}
 h^{'}_i = \Vert^K_{k=1} \sigma \left( \sum_{j \in \mathcal{N}_i} \left( \alpha^k_{ij}\textbf{W}h_j \right) \right)
 \end{equation}
@@ -35,7 +35,7 @@ Support for GNN in ML frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorF
 \begin{equation}\label{eq:pyg}
 h^{'}_i=\gamma \left( h_i, \Box _{j \in \mathcal{N}_i} \phi \left( h_i, h_j, e_{j,i} \right) \right)
 \end{equation}
-where $\Box$ denotes a differentiable, permutation invariant function, e.g. sum, mean or max, $\gamma$ and $\phi$ denote differentiable functions, e.g. MLPs and $e_{j,i}$ is an edge feature of edge $(j,i)$. PyG provides users with a general MessagePassing interface to implement new research ideas by defining the methods $\Box$, $\gamma$ and $\phi$. What's more, many proposed neighborhood aggregation functions have been integrated into PyG, including GCN, GraphSAGE, GAT and GIN.
+where $\Box$ denotes a differentiable, permutation invariant function, e.g. sum, mean or max, $\gamma$ and $\phi$ denote differentiable functions, e.g. MLPs and $e_{j,i}$ is an edge feature of edge $(j,i)$. PyG provides users with a general \textsl{MessagePassing} interface to implement new research ideas by defining the methods $\Box$, $\gamma$ and $\phi$. What's more, many proposed neighborhood aggregation functions have been integrated into PyG, including GCN, GraphSAGE, GAT and GIN.
 
 \subsubsection{Deep Graph Library (DGL)~\cite{wang2019deep}} Deep Graph Library (DGL) is a graph neural network framework based on multiple DL frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}). DGL follows a message passing paradigm. Specifically,  Let $\mathcal{G}(\mathcal{V}, \mathcal{E})$ be a graph with nodes $\mathcal{V}$ and edges $\mathcal{E}$. Let $x_v \in \mathbb{R}^{d_1}$ be the feature of node $v$ and $w_e \in \mathbb{R}^{d_1}$ be the feature of edge $(u, e, v)^2$. The message passing paradigm defines two computation pattern at step $t+1$:
 \begin{equation}\label{eq:dgl_edge_wise}
