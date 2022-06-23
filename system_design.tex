@@ -3,74 +3,90 @@
 
 % 突出学术上的贡献，淡化系统的工程实现；详尽说明系统支持的功能
 
-In order to integrate the functions of model code conversion, automatic deployment training and visualization of multi-dimensional analysis results, a fully automated function integration system was designed in this experiment.
-Similarly, OctoML aims to improve performance, speed up time-to-market, and minimize application latency while reducing deployment costs to provide a better user experience.
-However, it is a pity that the platform mainly focuses on general deep learning model and has not made relevant support for GNN.
-As the research objective of this paper, this system is committed to providing convenience for the code conversion and comparative training of GNN.
-It can also provide cloud different GPU, CPU hardware resource scheduling and cost-efficiency analysis, and provide us with model parameter optimization direction prediction and GPU hardware resource bidding recommendation.
+We design a fully automated integration system EasyCompare, which supports the functions of model transformation, deployment training and visualization of multi-dimensional analysis. In the industry, OctoML \textcolor{blue}{[cite]} aims to provide performance comparisons and deployment costs for model execution on specific hardwares to enrich user experience. However, OctoML focuses on traditional models implemented by DL frameworks without support for GNNs. In contrast, EasyCompare is committed to facilitating the code transformation and framework comparison of GNNs. EasyCompare also provides performance and cost-efficiency analysis of different cloud GPUs, allowing users to make informed platform choices based on their needs.
 
-\subsection{Local and remote different GPU resource scheduling}
+%In order to integrate the functions of model code conversion, automatic deployment training and visualization of multi-dimensional analysis results, a fully automated function integration system was designed in this experiment.
+%Similarly, OctoML aims to improve performance, speed up time-to-market, and minimize application latency while reducing deployment costs to provide a better user experience.
+%However, it is a pity that the platform mainly focuses on general deep learning model and has not made relevant support for GNN.
+%As the research objective of this paper, this system is committed to providing convenience for the code conversion and comparative training of GNN.
+%It can also provide cloud different GPU, CPU hardware resource scheduling and cost-efficiency analysis, and provide us with model parameter optimization direction prediction and GPU hardware resource bidding recommendation.
 
-In order to make the experimental results more universal, it is often not enough to train on the same GPU.
-Secondly, the lack of support for different GPUs will greatly affect the multi-task training and reduce the time efficiency of experiments.
-Therefore, it is necessary for the system to support local and remote different GPU resource scheduling.
-Since hardware resources can be local or remote, this involves unifying and allocating data files and ensuring data consistency during task execution.
-For local GPU resources, the system can directly allocate tasks and perform operations on hardware resources after obtaining permissions.
-For data resources, the system can directly send, receive, and allocate data locally. After task execution, the system obtains the result information and enters the result analysis.
+\subsection{GPU Resource Scheduling}
 
+In order to utlizing richer computing resources, EasyCompare supports access to both local and remote GPUs. For local GPUs, EasyCompare can directly allocate resources to training tasks after obtaining the permission. After task execution, EasyCompare collects the result logs and enters the analysis phase. 
 
-For remote data resources, we need to unify them through SSH File Transfer Protocol, that is, before performing training, the master host (i.e. the host where the experimental system is located) needs to send the training data file (i.e. the Python file obtained by the code generation step, which contains the generated GNN model) to the slave host.
-During the training process, log information and result information files are generated.
-Part of the log information can be directly directed (as described in the remote GPU resources later) to the master host.
-The remaining valid result information files are also sent to the master host through SFTP for analysis.
-For remote GPU resources, the master host experimental system executes the script files that have been deployed on the remote server through SSH remote execution commands, and uses redirection to direct the intermediate information of the program to the local.
-The Figure \ref{fig:run_on_remote_server} shows that the state transformation and flow process of running tasks on remote GPU server.
+For remote GPUs, EasyCompare needs to unify the runtime environment and ensure data consistency during task execution. Before training, the master host with EasyCompare deployment sends the training files (GNN model after code transformation) to the slave host via SSH File Transfer Protocol (SFTP). During the training process, the master host remotely executes the training files via SSH and redirects the runtime logs to the local. After training, EasyCompare sends valid result logs back to the master host via SFTP. Figure~\ref{fig:run_on_remote_server} shows the flow of task running on a remote GPU.
+
+%In order to make the experimental results more universal, it is often not enough to train on the same GPU.
+%Secondly, the lack of support for different GPUs will greatly affect the multi-task training and reduce the time efficiency of experiments.
+%Therefore, it is necessary for the system to support local and remote different GPU resource scheduling.
+%Since hardware resources can be local or remote, this involves unifying and allocating data files and ensuring data consistency during task execution.
+%For local GPU resources, the system can directly allocate tasks and perform operations on hardware resources after obtaining permissions.
+%For data resources, the system can directly send, receive, and allocate data locally. After task execution, the system obtains the result information and enters the result analysis.
+
+%For remote data resources, we need to unify them through SSH File Transfer Protocol, that is, before performing training, the master host (i.e. the host where the experimental system is located) needs to send the training data file (i.e. the Python file obtained by the code generation step, which contains the generated GNN model) to the slave host.
+%During the training process, log information and result information files are generated.
+%Part of the log information can be directly directed (as described in the remote GPU resources later) to the master host.
+%The remaining valid result information files are also sent to the master host through SFTP for analysis.
+%For remote GPU resources, the master host experimental system executes the script files that have been deployed on the remote server through SSH remote execution commands, and uses redirection to direct the intermediate information of the program to the local.
+%The Figure \ref{fig:run_on_remote_server} shows that the state transformation and flow process of running tasks on remote GPU server.
+
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/run_on_remote_server.png}
-    \caption{state transformation and flow process of running tasks on remote GPU server}
+    \caption{The flow of task running on a remote GPU.}
     \label{fig:run_on_remote_server}
 \end{figure}
 
-\subsection{Calculation of GPU utilization}
-
-For the calculation scheme of GPU utilization, we adopt the method of periodically asking \textit{nvidia-smi} and obtaining the mean value, as shown in the following command example: \textit{nvidia-smi --query -- gpu=utilization. Gpu --format= CSV --loop=1}.
-It will output the current GPU utilization as a percentage every second.
-At the beginning of each training task, GPU utilization statistics are collected at the same time.
-After the task is completed, the mean value of several records is calculated to represent the GPU resource utilization of the training task.
-
-\subsection{Cost-efficiency comparison of different GPU resources}
-
-The computing characteristics of GNN are different from those of general neural networks, so the performance of GNN under different GPUs is also different from that of general neural networks.
-This experiment will compare the hardware performance on different GPU resources based on different GNN frameworks and datasets.
-In this paper, cost refers to the overhead of achieving a standard (i.e. it can be understood as performance per dollar), and efficiency refers to the standard to be achieved.
-Since cost-efficiency focuses on the performance efficiency brought about by the interaction between GNN framework and GPU hardware resource architecture, that is, it emphasizes on the hardware computing efficiency of hardware processing GNN framework, so training accuracy is not taken as the comparison standard of \textit{efficiency} in this paper.
-This is also because the speed of training convergence or the time required to achieve the same accuracy is not only related to GNN framework and GPU hardware resources, but also closely connected with the design of GNN model and the type of data set.
-Since the time required to train the same epoches is separated from the accuracy, it can be regarded as only related to the computational efficiency, so the standard to be compared in this experiment is defined as the time required to train the same epoches, which is defined as \textit{ET} (epoch per second).
-And then we can figure out the formula for cost-efficiency is \textit{CE=ET/cost}.
-Of course, the experiment will give the accuracy data under different comparison conditions for secondary reference.
+\subsection{Performance Metric Collection}
 
 
-In addition, based on real experimental data, the experimental system provides a prediction of the cost of renting cloud GPU computing resources, which will be explained in the experimental section.
+\subsubsection{GPU Utilization Calculation} During task training, EasyCompare utilizes the NVIDIA System Management Interface (\textit{nvidia-smi}) to periodically collect GPU utilization statistics. The command example is \textit{nvidia-smi --query --gpu=utilization . GPU --format= CSV --loop=1}. After task completion, the statistics are averaged as the overall GPU utilization for the training task.
 
-\subsection{System function synthesis}
+%For the calculation scheme of GPU utilization, we adopt the method of periodically asking \textit{nvidia-smi} and obtaining the mean value, as shown in the following command example: \textit{nvidia-smi --query -- gpu=utilization. Gpu --format= CSV --loop=1}.
+%It will output the current GPU utilization as a percentage every second.
+%At the beginning of each training task, GPU utilization statistics are collected at the same time.
+%After the task is completed, the mean value of several records is calculated to represent the GPU resource utilization of the training task.
 
-As mentioned above, the whole system integrates three main functions, including automatic generation of model code implemented under DGL and PyG according to GUC, automatic deployment training and visual multidimensional result analysis.
-The whole system adopts the way of back and front end separation, respectively representing the control calculation logic and interaction, visual presentation.
-The realization of system functions are supported by the back end control calculation logic, and by the front end to interact and visual display.
-The state transform of the overall process is shown in Figure \ref{fig:sys_state_trans}.
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{images/sys_state_trans.png}
-    \caption{system state transform}
-    \label{fig:sys_state_trans}
-\end{figure}
+\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textit{CE=ET/cost}, where \textit{ET} is number of epoches per second, and \textit{cost} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
 
-\textbf{GUC to model code transform and automated deployment training:}
-The model description interface written in GUC is passed to the model automatic transformation tool in backend, which translates it into GNN model code based on DGL and PyG.
-Before submitting training, data sets, epoches and type of GPU to be used for training should be selected (this involves different GPU resource scheduling mentioned in section 1 of this chapter).
-After collecting the information above, the backend will automatically organize it into executable codes and put it into training.
-The console information during training is fed back to the frontend for real-time monitoring.
+%\subsection{Cost-efficiency comparison of different GPU resources}
+%
+%The computing characteristics of GNN are different from those of general neural networks, so the performance of GNN under different GPUs is also different from that of general neural networks.
+%This experiment will compare the hardware performance on different GPU resources based on different GNN frameworks and datasets.
+%In this paper, cost refers to the overhead of achieving a standard (i.e. it can be understood as performance per dollar), and efficiency refers to the standard to be achieved.
+%Since cost-efficiency focuses on the performance efficiency brought about by the interaction between GNN framework and GPU hardware resource architecture, that is, it emphasizes on the hardware computing efficiency of hardware processing GNN framework, so training accuracy is not taken as the comparison standard of \textit{efficiency} in this paper.
+%This is also because the speed of training convergence or the time required to achieve the same accuracy is not only related to GNN framework and GPU hardware resources, but also closely connected with the design of GNN model and the type of data set.
+%Since the time required to train the same epoches is separated from the accuracy, it can be regarded as only related to the computational efficiency, so the standard to be compared in this experiment is defined as the time required to train the same epoches, which is defined as \textit{ET} (epoch per second).
+%And then we can figure out the formula for cost-efficiency is \textit{CE=ET/cost}.
+%Of course, the experiment will give the accuracy data under different comparison conditions for secondary reference.
+
+
+%In addition, based on real experimental data, the experimental system provides a prediction of the cost of renting cloud GPU computing resources, which will be explained in the experimental section.
+
+\subsection{System Function Synthesis}
+
+As mentioned above, EasyCompare integrates three main functions, including code generation, deployment training, and visualization of multi-dimensional analysis. EasyCompare adopts the form of front-end and back-end separation. The front-end is responsible for user interaction and result visualization, whereas the back-end realizes the system functions with control calculation logic.
+
+%EasyCompare adopts the form of front-end and back-end separation, the front-end is responsible for interaction and visual display, and the back-end realizes visual support by supporting control calculation logic.
+%
+%As mentioned above, the whole system integrates three main functions, including automatic generation of model code implemented under DGL and PyG according to GUC, automatic deployment training and visual multidimensional result analysis.
+%The whole system adopts the way of back and front end separation, respectively representing the control calculation logic and interaction, visual presentation.
+%The realization of system functions are supported by the back end control calculation logic, and by the front end to interact and visual display.
+%The state transform of the overall process is shown in Figure \ref{fig:sys_state_trans}.
+%\begin{figure}
+%    \centering
+%    \includegraphics[width=\textwidth]{images/sys_state_trans.png}
+%    \caption{system state transform}
+%    \label{fig:sys_state_trans}
+%\end{figure}
+
+\subsubsection{Code Generation \& Deployment Training} EasyCompare passes the model description written in GUC to the back-end code transformation tool, which translates the description into GNN model codes implemented by DGL and PyG interfaces. Before execution, the user can select the graph dataset, number of epochs and GPU architecture for training through front-end interaction. After collecting the above information, the back-end automatically generates executable files on the specified host and starts training. The console display during training (e.g., changes in training accuracy) is fed back to the front-end for real-time monitoring.
+
+%The model description interface written in GUC is passed to the model automatic transformation tool in backend, which translates it into GNN model code based on DGL and PyG.
+%Before submitting training, data sets, epoches and type of GPU to be used for training should be selected (this involves different GPU resource scheduling mentioned in section 1 of this chapter).
+%After collecting the information above, the backend will automatically organize it into executable codes and put it into training.
+%The console information during training is fed back to the frontend for real-time monitoring.
 
 
 %\begin{figure}
@@ -103,9 +119,10 @@ The console information during training is fed back to the frontend for real-tim
 \end{figure}
 
 
-\textbf{Visualization of multidimensional result analysis:}
-The system will collect the detailed data obtained from GNN model training under DGL and PyG, and use it to calculate GPU utilization rate (mentioned in Section 2 of this chapter), compare the performance of different GPU resources (mentioned in Section 3 of this chapter), and analyze the running details of operators and kernel functions.
-Using the Pytorch Profiler tool, the time and proportion of hardware resources occupied by the operators used during training can be obtained, information is the same for kernel functions.
-System will treat the source data for analysis and will present the comparison of operator and kernel information under DGL and PyG in pie charts (shown as Figure \ref{fig:result_comparison} (a)) and tables, clear and intuitive.
-In addition, there is a comparative analysis of the same operators involved in the two frames (shown as Figure \ref{fig:result_comparison} (b)).
-By analyzing the same operator involved in the two frames, we can further study the different characteristics of the two frames in dealing with the same model.
+\textbf{Visualization of Multi-dimensional Analysis} EasyCompare collects detailed statistics during model training. These statistics are exploited to calculate GPU utilization, conduct multi-dimensional performance comparisons, and analyze operator execution details. EasyCompare utilizes PyTorch Profiler to obtain the time breakdown of each operator occupying hardware resources in the training process. EasyCompare presents the operator comparison between DGL and PyG as pie charts (shown in Figure~\ref{fig:result_comparison} (a)). Further, EasyCompare provides a comparative analysis of the identical operators in the two charts (shown in Figure~\ref{fig:result_comparison} (b)). By doing so, researchers can dig deeper into how the frameworks behave when dealing with the same model.
+
+%The system will collect the detailed data obtained from GNN model training under DGL and PyG, and use it to calculate GPU utilization rate (mentioned in Section 2 of this chapter), compare the performance of different GPU resources (mentioned in Section 3 of this chapter), and analyze the running details of operators and kernel functions.
+%Using the Pytorch Profiler tool, the time and proportion of hardware resources occupied by the operators used during training can be obtained, information is the same for kernel functions.
+%System will treat the source data for analysis and will present the comparison of operator and kernel information under DGL and PyG in pie charts (shown as Figure \ref{fig:result_comparison} (a)) and tables, clear and intuitive.
+%In addition, there is a comparative analysis of the same operators involved in the two frames (shown as Figure \ref{fig:result_comparison} (b)).
+%By analyzing the same operator involved in the two frames, we can further study the different characteristics of the two frames in dealing with the same model.
