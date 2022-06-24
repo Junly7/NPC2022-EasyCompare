@@ -4,15 +4,15 @@
 \subsection{Experiment Setup}
 \label{sec:setup}
 
-% Æ«Ð¡µÄÊý¾Ý¼¯£¨µ¥¸öGPU·ÅµÃÏÂ£©(6-8¸ö)ÓÃfull graph training£¬´óµÄÊý¾Ý¼¯£¨1-2¸ö£©ÓÃmini-batch training
+% Æ«Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½GPUï¿½Åµï¿½ï¿½Â£ï¿½(6-8ï¿½ï¿½)ï¿½ï¿½full graph trainingï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý¼ï¿½ï¿½ï¿½1-2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mini-batch training
 Hardware and software configurations, gnn configurations, graph datasets, comparison metrics ...
 
 \subsection{Framework Comparison}
 \label{sec:frameworkcomp}
 
-% ×¢ÒâËµÃ÷ÓÃEasyCompare²Å¿ÉÒÔ×öµ½¿ò¼ÜÖ®¼äµÄ¹«Õý¶Ô±ÈºÍ¿ÉÊÓ»¯£¬·½±ãÓÃ»§×ö³ö¿ò¼ÜÑ¡ÔñºÍÐÔÄÜ·ÖÎö
+% ×¢ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½EasyCompareï¿½Å¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½Ô±ÈºÍ¿ï¿½ï¿½Ó»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü·ï¿½ï¿½ï¿½
 
-(on V100) Compare PyG with DGL, including execution time, GPU utilization, memory usage ...
+(on V100) Compare PyG with DGL, including execution time, GPU utilization, memory usage ... 3 * 4 figures
 
 Analyse the reasons of experiment results, from the perspective of framework design (e.g., graph operator implementation)
 
@@ -20,12 +20,19 @@ Analyse the reasons of experiment results, from the perspective of framework des
 
 \subsubsection{Mini-batch Training}
 
+(on V100) Compare PyG with DGL, only execution time, 1 * 4 figures
+
+\subsection{Operator Breakdown}
+\label{sec:breakdown}
+
+(on V100) PyG, DGL, Top-10/20 operator intesection (4-6 operators each figure), 2 * 4 figures
+
 \subsection{Case Study: Cloud GPU Selection}
 \label{sec:casestudy}
 
-% ×¢ÒâËµÃ÷ÓÃEasyCompare¿ÉÒÔ·½±ãµØÊä³ö²»Í¬GPUµÄÐÔÄÜ¶Ô±È£¬·½±ãÓÃ»§×ö³öGPUÑ¡Ôñ
+% ×¢ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½EasyCompareï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬GPUï¿½ï¿½ï¿½ï¿½ï¿½Ü¶Ô±È£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½GPUÑ¡ï¿½ï¿½
 
-(only full-graph training) Compare V100 with A100, considering pure performance and cost efficiency
+(only full-graph training) Compare V100 with A100, considering pure performance and cost efficiency, 2 * 4 figures
 
 Analyse the reasons of experiment results, from the perspective of hardware details, computational characteristics of GNNs
 
