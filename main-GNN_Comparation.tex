@@ -5,6 +5,7 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{subcaption}
+\usepackage{footnote}
 
 
 % mathbb font
@@ -36,12 +37,25 @@ numberbychapter={false}         % default true
 %
 \begin{document}
 %
-\title{EasyCompare: a GNN models comparison and analysis system}
+\title{EasyCompare: Performance Analysis System for GNN Models across GPUs}
+
 %
 %\titlerunning{Abbreviated paper title}
 % If the paper title is too long for the running head, you can set
 % an abbreviated paper title here
-%
+
+\author{Kejie Ma\inst{1}$\dagger$ \and Zizheng Zhang\inst{1}$\dagger$ \and Qingxiao Sun\inst{1} \and Hailong Yang\inst{1}\thanks{Corresponding author, hailong.yang@buaa.edu.cn} \and Zhongzhi Luan\inst{1} \and Depei Qian\inst{1}}
+\authorrunning{K. Ma, Z. Zhang et al.}
+\institute{School of Computer Science and Engineering, Beihang University, Beijing, China
+\email{\{cpyking,qingxiaosun,hailong.yang,zhongzhi.luan,depeiq\}@buaa.edu.cn}}
+
+\def\thefootnote{$\dagger$}\footnotetext{Equal contribution}\def\thefootnote{\arabic{footnote}}
+
+%\author{Tianyu Feng$^{1,2}$ \and Siyan Chen$^{2}$ \and Xin You$^{2}$ \and Shuzhang Zhong$^{2}$ \and Hailong Yang$^{1,2}$\thanks{Corresponding author, hailong.yang@buaa.edu.cn} \and Zhongzhi Luan$^{2}$ \and Depei Qian$^{2}$}
+%\authorrunning{T. Feng, S. Chen et al.}
+%\institute{State Key Laboratory of Software Development Environment$^{1}$, Beijing, China \\
+%School of Computer Science and Engineering, Beihang University$^{2}$, Beijing, China}
+
 %\author{First Author\inst{1}\orcidID{0000-1111-2222-3333} \and
 %Second Author\inst{2,3}\orcidID{1111-2222-3333-4444} \and
 %Third Author\inst{3}\orcidID{2222--3333-4444-5555}}
