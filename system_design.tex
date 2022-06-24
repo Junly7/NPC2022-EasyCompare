@@ -103,23 +103,24 @@ As mentioned above, EasyCompare integrates three main functions, including code 
 %    \label{fig:result_comparison}
 %\end{figure}
 \begin{figure}[!h]
+    \centering
     \begin{minipage}[c]{0.47\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{images/pie_op_compare.jpg}
-        \subcaption{\centering comparison of operators with pie chart}
+        \subcaption{\centering Operator comparison with pie charts}
         \label{fig:pie_op_compare}
     \end{minipage}
     \begin{minipage}[c]{0.47\textwidth}
         \includegraphics[width=1\textwidth]{images/same_op_compare.png}
-        \subcaption{\centering same operator comparison}
+        \subcaption{\centering Comparative analysis of identical operators}
         \label{fig:same_op_compare}
     \end{minipage}
-    \caption{result comparison}
+    \caption{Visualization of operator comparisons between GNN frameworks.}
     \label{fig:result_comparison}
 \end{figure}
 
 
-\textbf{Visualization of Multi-dimensional Analysis} EasyCompare collects detailed statistics during model training. These statistics are exploited to calculate GPU utilization, conduct multi-dimensional performance comparisons, and analyze operator execution details. EasyCompare utilizes PyTorch Profiler to obtain the time breakdown of each operator occupying hardware resources in the training process. EasyCompare presents the operator comparison between DGL and PyG as pie charts (shown in Figure~\ref{fig:result_comparison} (a)). Further, EasyCompare provides a comparative analysis of the identical operators in the two charts (shown in Figure~\ref{fig:result_comparison} (b)). By doing so, researchers can dig deeper into how the frameworks behave when dealing with the same model.
+\textbf{Visualization of Multi-dimensional Analysis} EasyCompare collects detailed statistics during model training. These statistics are exploited to calculate GPU utilization, conduct multi-dimensional performance comparisons, and analyze operator execution details. EasyCompare utilizes PyTorch Profiler to obtain the time breakdown of each operator occupying hardware resources in the training process. EasyCompare presents the operator comparison between DGL and PyG with pie charts (shown in Figure~\ref{fig:result_comparison} (a)). Further, EasyCompare provides a comparative analysis of the identical operators in the two charts (shown in Figure~\ref{fig:result_comparison} (b)). By doing so, researchers can dig deeper into how the frameworks behave when dealing with the same model.
 
 %The system will collect the detailed data obtained from GNN model training under DGL and PyG, and use it to calculate GPU utilization rate (mentioned in Section 2 of this chapter), compare the performance of different GPU resources (mentioned in Section 3 of this chapter), and analyze the running details of operators and kernel functions.
 %Using the Pytorch Profiler tool, the time and proportion of hardware resources occupied by the operators used during training can be obtained, information is the same for kernel functions.
