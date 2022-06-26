@@ -13,7 +13,7 @@ We design a fully automated integration system EasyCompare, which supports the f
 
 \subsection{GPU Resource Scheduling}
 
-In order to utlizing richer computing resources, EasyCompare supports access to both local and remote GPUs. For local GPUs, EasyCompare can directly allocate resources to training tasks after obtaining the permission. After task execution, EasyCompare collects the result logs and enters the analysis phase. 
+In order to utlizing richer computing resources, EasyCompare supports access to both local and remote GPUs. For local GPUs, EasyCompare can directly allocate resources to training tasks after obtaining the permission. After task execution, EasyCompare collects the result logs and enters the analysis phase.
 
 For remote GPUs, EasyCompare needs to unify the runtime environment and ensure data consistency during task execution. Before training, the master host with EasyCompare deployment sends the training files (GNN model after code transformation) to the slave host via SSH File Transfer Protocol (SFTP). During the training process, the master host remotely executes the training files via SSH and redirects the runtime logs to the local. After training, EasyCompare sends valid result logs back to the master host via SFTP. Figure~\ref{fig:run_on_remote_server} shows the flow of task running on a remote GPU.
 
@@ -102,7 +102,7 @@ As mentioned above, EasyCompare integrates three main functions, including code 
 %    \caption{result comparison}
 %    \label{fig:result_comparison}
 %\end{figure}
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \begin{minipage}[c]{0.47\textwidth}
         \centering

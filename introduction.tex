@@ -1,6 +1,6 @@
 \section{Introduction (1 pages)}
 \label{sec:introduction}
-In recent years, Graph Neural Networks (GNNs) have been widely adopted in many aspects, such as node classification, edge classification and link prediction. Different from traditional deep neural networks (DNNs) that operate on Euclidean data (e.g.,1D text and 2D images), GNNs are trained on non-Euclidean data (e.g., social-network graphs and knowledge graphs). GNNs generally involve highly memory-intensive graph operations, which makes them difficult to achieve high performance on many-core processors (e.g., GPUs).
+In recent years, Graph Neural Networks (GNNs)~\cite{wu2020comprehensive} have been widely adopted in many aspects, such as node classification, edge classification and link prediction. Different from traditional deep neural networks (DNNs) that operate on Euclidean data (e.g.,1D text and 2D images), GNNs are trained on non-Euclidean data (e.g., social-network graphs and knowledge graphs). GNNs generally involve highly memory-intensive graph operations, which makes them difficult to achieve high performance on many-core processors (e.g., GPUs).
 
 %With the wide use of GNN, the performance of GNN is getting more and more attention.
 
@@ -15,8 +15,8 @@ Multi-dimensional performance comparisons of GNN models are important for both u
 
 \textbf{Lack of performance analysis systems.} A comprehensive performance comparison requires deploying GNN models implemented with multiple GNN frameworks on diverse GPUs. Furthermore, log recycling and result visualization are tedious and tricky for bother users and researchers. Finally, we implement an integrated system that can run GNN models on various GPUs and visualize performance logs for better comparison and analysis.
 
-To this end, we propose EasyCompare to achieve high efficiency for GNN performance comparison and result analysis. First, we design a Domain Specific Language (DSL) called GUC (\underline{G}NN \underline{U}nified Language based on \underline{C}$++$), which enables the convenient definition of GNN models. Then, we develop a code transformer to automatically convert GUC DSL into execuable Python codes on DGL and PyG frameworks. Finally, we implement an integrated system that run GNN models on various GPUs and visualize performance logs for better analysis. 
+To this end, we propose EasyCompare to achieve high efficiency for GNN performance comparison and result analysis. First, we design a Domain Specific Language (DSL) called GUC (\underline{G}NN \underline{U}nified Language based on \underline{C}$++$), which enables the convenient definition of GNN models. Then, we develop a code transformer to automatically convert GUC DSL into execuable Python codes on DGL and PyG frameworks. Finally, we implement an integrated system that run GNN models on various GPUs and visualize performance logs for better analysis.
 
 Based on EasyCompare, we conduct extensive experiment to explore the factors that influence the performance of GNN models. \textcolor{blue}{The results show that... (brief description)}
 
-\textcolor{blue}{The rest of this paper is orgnized as follows ... (paper organization)}
+The rest of this paper is orgnized as follows. Section \ref{sec:background} presents the background of GNNs and GNN frameworks. Section \ref{sec:gnndsl}, Section \ref{sec:codetran} and Section \ref{sec:system} introduce the implementation of EasyCompare. Section \ref{sec:evaluation} presents the results of experiments based on EasyCompare, and Section \ref{sec:conclusion} concludes this paper.

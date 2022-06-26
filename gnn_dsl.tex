@@ -1,42 +1,16 @@
 \section{GUC DSL (1.5 pages)}
 \label{sec:gnndsl}
-In this section, we propose a DSL called GUC (\underline{G}NN \underline{U}nified Language based on \underline{C}$++$) to define GNN models. \textcolor{blue}{GUC DSL is based on LLVM Clang [cite] and in accordance with the C$++$ syntax.} The GUC form is close to the Python interface of GNN frameworks. Meanwhile, we simplify the details of defining GNNs to improve the usability of GUC. Next, we introduce the code block and GUC APIs, as well as an example of GCN implementation using GUC.
+In this section, we propose a DSL called GUC (\underline{G}NN \underline{U}nified Language based on \underline{C}$++$) to define GNN models. GUC DSL is based on LLVM Clang~\cite{clang2022} and in accordance with the C$++$ syntax. The GUC form is close to the Python interface of GNN frameworks. Meanwhile, we simplify the details of defining GNNs to improve the usability of GUC. Next, we introduce the code block and GUC APIs, as well as an example of GCN implementation using GUC.
 
 \subsection{Code Block}
 \label{subsec:codeblock}
-GUC uses the code block to define various GNN models. The code block is transformed into executable Python codes on DGL or PyG (discussed in Section \ref{sec:codetran}). Figure~\ref{fig:codeblock} shows the code block for network definition in GUC. The code block consists of three fundamental parts:
+GUC uses the code block to define various GNN models. The code block is transformed into executable Python codes on DGL or PyG (discussed in Section \ref{sec:codetran}). Figure~\ref{fig:gcn_guc} shows an example of code block for network definition in GUC. The code block consists of three fundamental parts:
 
 \textbf{(a) Function definition.} Define every function that will be initialized later such as GNN convolutions, activations and dropouts.
 
 \textbf{(b) Function initialization.} Initialize the functions with appropriate parameters (e.g., hidden length). The \textsl{in\_feat} and \textsl{out\_feat} are determined by the dataset without instantiation.
 
 \textbf{(c) Forward propagation definition.} Define the forward propagation with input feature tensor \textsl{h} and functions initialized above. The output tensor is returned after passing through the functions.
-
-%\lstset{
-%caption={Code block for network definition in GUC DSL},
-%label={listing:code-block}
-%}
-
-\begin{figure}
-  \begin{lstlisting}
-   
-class NET {
-  // (a) Function definition
-
-  void __init__(int in_feat, int out_feat) {
-    super();  // Corresponding to "super().__init__()"
-    // (b) Function initialization
-  }
-
-  tensor forward(tensor h) {
-    // (c) Forward propagation definition
-    return h;
-  }
-}
-  \end{lstlisting}
-  \caption{Code block for network definition in GUC.}
-  \label{fig:codeblock}
-\end{figure}
 
 \subsection{GUC APIs}
 \label{subsec:nnapis}
@@ -73,11 +47,13 @@ Figure \ref{fig:gcn_guc} shows an example of GCN implementation in GUC. The mode
 \begin{figure}
   \begin{lstlisting}
 class NET {
+  // (a) Function definition
   Conv conv1, conv2;
   Activation relu1, relu2;
 
   void __init__(int in_feat,int out_feat) {
-    super();
+    super();  // Corresponding to "super().__init__()"
+    // (b) Function initialization
     conv1=GCNConv(in_feat,16,true,true);
     conv2=GCNConv(16,out_feat,false,true);
     relu1=ReLU();
@@ -85,6 +61,7 @@ class NET {
   }
 
   tensor forward(tensor h) {
+    // (c) Forward propagation definition
     h=relu1.in(conv1.in(h));
     h=relu2.in(conv2.in(h));
     return h;
