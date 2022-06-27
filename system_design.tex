@@ -33,32 +33,33 @@ For remote GPUs, EasyCompare needs to unify the runtime environment and ensure d
 
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{images/run_on_remote_server.png}
+    \includegraphics[width=\textwidth]{images/running_remote_server.pdf}
     \caption{The flow of task running on a remote GPU.}
     \label{fig:run_on_remote_server}
+    \vspace{-0.7cm}
 \end{figure}
 
 \subsection{Performance Metric Collection}
 
 
-\subsubsection{GPU Utilization Calculation} During task training, EasyCompare utilizes the NVIDIA System Management Interface (\textit{nvidia-smi}) to periodically collect GPU utilization statistics. The command example is \textit{nvidia-smi --query --gpu=utilization . GPU --format= CSV --loop=1}. After task completion, the statistics are averaged as the overall GPU utilization for the training task.
+\subsubsection{GPU Utilization Calculation} During task training, EasyCompare utilizes the NVIDIA System Management Interface (\textsl{nvidia-smi}) to periodically collect GPU utilization statistics. The command example is \textsl{nvidia-smi --query --gpu=utilization.gpu --format=csv --loop=1}. After task completion, the statistics are averaged as the overall GPU utilization for the training task.
 
-%For the calculation scheme of GPU utilization, we adopt the method of periodically asking \textit{nvidia-smi} and obtaining the mean value, as shown in the following command example: \textit{nvidia-smi --query -- gpu=utilization. Gpu --format= CSV --loop=1}.
+%For the calculation scheme of GPU utilization, we adopt the method of periodically asking \textsl{nvidia-smi} and obtaining the mean value, as shown in the following command example: \textsl{nvidia-smi --query -- gpu=utilization. Gpu --format= CSV --loop=1}.
 %It will output the current GPU utilization as a percentage every second.
 %At the beginning of each training task, GPU utilization statistics are collected at the same time.
 %After the task is completed, the mean value of several records is calculated to represent the GPU resource utilization of the training task.
 
-\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textit{CE=ET/cost}, where \textit{ET} is number of epoches per second, and \textit{cost} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
+\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textsl{CE=ET/cost}, where \textsl{ET} is number of epoches per second, and \textsl{cost} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
 
 %\subsection{Cost-efficiency comparison of different GPU resources}
 %
 %The computing characteristics of GNN are different from those of general neural networks, so the performance of GNN under different GPUs is also different from that of general neural networks.
 %This experiment will compare the hardware performance on different GPU resources based on different GNN frameworks and datasets.
 %In this paper, cost refers to the overhead of achieving a standard (i.e. it can be understood as performance per dollar), and efficiency refers to the standard to be achieved.
-%Since cost-efficiency focuses on the performance efficiency brought about by the interaction between GNN framework and GPU hardware resource architecture, that is, it emphasizes on the hardware computing efficiency of hardware processing GNN framework, so training accuracy is not taken as the comparison standard of \textit{efficiency} in this paper.
+%Since cost-efficiency focuses on the performance efficiency brought about by the interaction between GNN framework and GPU hardware resource architecture, that is, it emphasizes on the hardware computing efficiency of hardware processing GNN framework, so training accuracy is not taken as the comparison standard of \textsl{efficiency} in this paper.
 %This is also because the speed of training convergence or the time required to achieve the same accuracy is not only related to GNN framework and GPU hardware resources, but also closely connected with the design of GNN model and the type of data set.
-%Since the time required to train the same epoches is separated from the accuracy, it can be regarded as only related to the computational efficiency, so the standard to be compared in this experiment is defined as the time required to train the same epoches, which is defined as \textit{ET} (epoch per second).
-%And then we can figure out the formula for cost-efficiency is \textit{CE=ET/cost}.
+%Since the time required to train the same epoches is separated from the accuracy, it can be regarded as only related to the computational efficiency, so the standard to be compared in this experiment is defined as the time required to train the same epoches, which is defined as \textsl{ET} (epoch per second).
+%And then we can figure out the formula for cost-efficiency is \textsl{CE=ET/cost}.
 %Of course, the experiment will give the accuracy data under different comparison conditions for secondary reference.
 
 
@@ -104,7 +105,7 @@ As mentioned above, EasyCompare integrates three main functions, including code 
 %\end{figure}
 \begin{figure}[!ht]
     \centering
-    \begin{minipage}[c]{0.47\textwidth}
+    \begin{minipage}[c]{0.35\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{images/pie_op_compare.jpg}
         \subcaption{\centering Operator comparison with pie charts}
@@ -117,6 +118,7 @@ As mentioned above, EasyCompare integrates three main functions, including code 
     \end{minipage}
     \caption{Visualization of operator comparisons between GNN frameworks.}
     \label{fig:result_comparison}
+    \vspace{-0.6cm}
 \end{figure}
 
 
