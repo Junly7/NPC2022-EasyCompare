@@ -12,38 +12,6 @@ GUC uses the code block to define various GNN models. The code block is transfor
 
 \textbf{(c) Forward propagation definition.} Define the forward propagation with input feature tensor \textsl{h} and functions initialized above. The output tensor is returned after passing through the functions.
 
-\subsection{GUC APIs}
-\label{subsec:nnapis}
-
-The main functional interfaces of GUC include graph convolutions and activation functions. In addition, GUC also involves other interfaces to implement network definition and batch training (e.g., dropout, linear, and Mini-batch).
-
-%\textbf{GNN Convolution.}
-\subsubsection{Graph Convolution} Currently, GUC defines four graph convolution interfaces including \textsl{GCNConv}, \textsl{SAGEConv}, \textsl{GATConv} and \textsl{GINConv}, corresponding to GCN, GraphSAGE, GAT and GIN respectively. Each interface has at least a initialization function for layer definition and a forward propagation function for tensor processing. The forward propagation function is defined as follows:
-
-\begin{center}
-\textbf{\textsl{Conv.in}}:$(init:W, f:X\rightarrow Y, in: X)\rightarrow Y$
-\end{center}
-
-\noindent The forward propagation function takes the feature tensor and weight matrix as input and obtains the output tensor through arithmetic calculation. The graph convolution definitions will be transformed into functionally equivalent interfaces on different GNN frameworks.
-
-%\textbf{Activation Function.}
-\subsubsection{Activation Function} The activation function interfaces in GUC include \textsl{ReLU}, \textsl{LeakyReLU}, \textsl{Tanh}, \textsl{ELU}, etc. Similar to graph convolution interfaces, each activation function interface is with a tensor processing function:
-
-\begin{center}
-\textbf{\textsl{Activation.in}}:$([init:op], f:X\rightarrow Y, in: X)\rightarrow Y$
-\end{center}
-
-\noindent The tensor processing function applies non-linear activations to the input tensor. The activation function definitions will be transformed to corresponding interfaces in PyTorch backend.
-
-\subsection{An Example: GCN Implementation}
-\label{subsec:gcn_guc}
-Figure \ref{fig:gcn_guc} shows an example of GCN implementation in GUC. The model consists of two GCN layers, each nested within an activation function. The initialization interfaces of \textsl{GCNConv} and \textsl{LeakyReLU} are defined as follows:
-
-\begin{center}
-\textbf{\textsl{GCNConv}}:$({\rm int}\; in\_feat, {\rm int}\; out\_feat, {\rm bool}\; bias, {\rm bool}\; normalize)$ \\
-\textbf{\textsl{LeakyReLU}}:$({\rm double}\; negative\_slope)$
-\end{center}
-
 \begin{figure}
   \begin{lstlisting}
 class NET {
@@ -71,3 +39,37 @@ class NET {
   \caption{GCN implementation in GUC.}
   \label{fig:gcn_guc}
 \end{figure}
+
+\subsection{GUC APIs}
+\label{subsec:nnapis}
+
+The main functional interfaces of GUC include graph convolutions, activation functions and mini-batch. In addition, GUC also involves other interfaces to implement network definition and batch training (e.g. tensor, dropout and linear).
+
+%\textbf{GNN Convolution.}
+\subsubsection{Graph Convolution} Currently, GUC defines four graph convolution interfaces including \textsl{GCNConv}, \textsl{SAGEConv}, \textsl{GATConv} and \textsl{GINConv}, corresponding to GCN, GraphSAGE, GAT and GIN respectively. Each interface has at least a initialization function for layer definition and a forward propagation function for tensor processing. The forward propagation function is defined as follows:
+
+\begin{center}
+\textbf{\textsl{Conv.in}}:$(init:W, f:X\rightarrow Y, in: X)\rightarrow Y$
+\end{center}
+
+\noindent The forward propagation function takes the feature tensor and weight matrix as input and obtains the output tensor through arithmetic calculation. The graph convolution definitions will be transformed into functionally equivalent interfaces on different GNN frameworks.
+
+%\textbf{Activation Function.}
+\subsubsection{Activation Function} The activation function interfaces in GUC include \textsl{ReLU}, \textsl{LeakyReLU}, \textsl{Tanh}, \textsl{ELU}, etc. Similar to graph convolution interfaces, each activation function interface is with a tensor processing function:
+
+\begin{center}
+\textbf{\textsl{Activation.in}}:$([init:op], f:X\rightarrow Y, in: X)\rightarrow Y$
+\end{center}
+
+\noindent The tensor processing function applies non-linear activations to the input tensor. The activation function definitions will be transformed to corresponding interfaces in PyTorch backend.
+
+\subsubsection{Mini-batch} GUC supports mini-batch training with batch sizes. According to the batch size defined by users and fixed settings, datasets will be automatically batched with \textsl{NeighborSampler}~\cite{hamilton2017inductive}.
+
+\subsection{An Example: GCN Implementation}
+\label{subsec:gcn_guc}
+Figure \ref{fig:gcn_guc} shows an example of GCN implementation in GUC. The model consists of two GCN layers, each nested within an activation function. The initialization interfaces of \textsl{GCNConv} and \textsl{LeakyReLU} are defined as follows:
+
+\begin{center}
+\textbf{\textsl{GCNConv}}:$({\rm int}\; in\_feat, {\rm int}\; out\_feat, {\rm bool}\; bias, {\rm bool}\; normalize)$ \\
+\textbf{\textsl{LeakyReLU}}:$({\rm double}\; negative\_slope)$
+\end{center}

@@ -1,7 +1,7 @@
 \section{Code Transformer (1.5 pages)}
 \label{sec:codetran}
 
-In this section, we propose a code transformer based on LLVM Clang to transform GUC DSL into executable Python codes of GNN frameworks. The core idea of the transcoder is that GNNs implemented by different frameworks share the same structure defined by GUC DSL. The solution is to transform the interfaces (e.g., GCNConv) in GUC DSL into functionally equivalent interfaces (e.g., GraphConv in DGL and GCNConv in PyG) with necessary parameters. 
+In this section, we propose a code transformer based on LLVM Clang to transform GUC DSL into executable Python codes of GNN frameworks. The core idea of the transcoder is that GNNs implemented by different frameworks share the same structure defined by GUC DSL. The solution is to transform the interfaces (e.g., GCNConv) in GUC DSL into functionally equivalent interfaces (e.g., GraphConv in DGL and GCNConv in PyG) with necessary parameters.
 
 The Clang (the front-end of the LLVM compiler) is leveraged to modify the original code. Figure~\ref{fig:gcn_python} shows the transformed codes of the GCN example in Figure~\ref{fig:gcn_guc}, where the modification details are highlighted. The code transformer adds basic syntaxes and makes no changes to the conforming Python paradigms. More importantly, the code transformer automatically replaces GUC interfaces by the exact interfaces with corresponding parameters to maintain functional equivalence between frameworks.
 
@@ -28,7 +28,7 @@ class NET(nn.Module):
     \end{lstlisting}
     \subcaption{\centering GCN implementation in PyG}
   \end{minipage}
-  
+
   \begin{minipage}[c]{1\textwidth}
     \begin{lstlisting}
 class NET(nn.Module):

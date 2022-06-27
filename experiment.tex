@@ -41,26 +41,25 @@ The GNN models are implemented by PyG and DGL while ensuring model alignment (2 
     \centering
     \caption{Datasets used for evaluation}
     \label{tab:Datasets used for evaluation}
-    \setlength{\tabcolsep}{7.mm}{
-        \begin{tabular}{|c|c|c|c|}
+    \setlength{\tabcolsep}{2.mm}{
+        \begin{tabular}{|c|c|c|c|c|c|}
             \hline
-            Dataset & \#Nodes & Sizes & Scale \\
+            Dataset & \#Nodes & \#Edges & Feature Length & \#Classes & Scale\\
             \hline
-            PubMed & 19,717 & 41,086,414 & small \\
-            PPI & 56,944 & 18,895,872 & small \\
-            arXiv & 169,343 & 109,494,272 & middle \\
-            DD & 334,925 & 138,411,008 & middle \\
-            COLLAB & 235,868 & 165,507,072 & middle \\
-            PPA & 576,289 & 827,491,328 & large \\
-            PROTEINS & 132,534 & 1,273,385,984 & large \\
-            reddit.dgl & 232,965 & 2,400,594,432 & oversized \\
-            Products & 2,449,029 & 3,017,921,024 & oversized \\
+            PubMed & 19,717 & 99,203 & 500 & 3 & small \\
+            PPI & 56,944 & 818,716 & 50 & 121 & small \\
+            arXiv & 169,343 & 1,166,243 & 128 & 40 & middle \\
+            DD & 334,925 & 1,686,092 & 89 & 32 & middle \\
+            COLLAB & 235,868 & 2,358,104 & 128 & 32 & middle \\
+            PPA & 576,289 & 42,463,862 & 58 & 16 & large \\
+            PROTEINS & 132,534 & 79,122,504 & 8 & 2 & large \\
+            reddit.dgl & 232,965 & 114,615,891 & 602 & 50 & oversized \\
+            Products & 2,449,029 & 123,718,280 & 100 & 47 & oversized \\
             \hline
         \end{tabular}
     }
     \vspace{-0.7cm} %调整与下文的垂直距离
 \end{table}
-
 
 \subsubsection{Comparison metrics}
 The experiment will use two GPUs to measure the performance of training multiple datasets under four GNNs, including time overhead, GPU utilization and peak memory consumption.
@@ -75,13 +74,13 @@ Finally, according to the results above, a case study on cost-efficiency under d
 \begin{figure}
     \vspace{-0.8cm} %调整图片与上文的垂直距离
     \centering
-    
+
     \begin{minipage}[c]{1\textwidth}
-        
+
         \includegraphics[width=\textwidth]{images/full_graph_memory.pdf}
         \subcaption{Peak memory consumption.}
-        \label{fig:full_graph_memory}      
-        
+        \label{fig:full_graph_memory}
+
 
         \includegraphics[width=\textwidth]{images/full_graph_time.pdf}
         \subcaption{Exection time.}
@@ -90,13 +89,12 @@ Finally, according to the results above, a case study on cost-efficiency under d
         \includegraphics[width=\textwidth]{images/full_graph_gpu.pdf}
         \subcaption{GPU utilization.}
         \label{fig:full_graph_gpu}
-        
-        
+
     \end{minipage}
-    
+
     \caption{Full-graph training of 128 epoches on V100, OOM means out-of-memory.}
     \label{fig:full_graph}
-    
+
     \vspace{-1cm} %调整图片与下文的垂直距离
 \end{figure}
 
