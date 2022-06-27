@@ -6,9 +6,9 @@
 
 % ƫС�����ݼ�������GPU�ŵ��£�(6-8��)��full graph training���������ݼ���1-2������mini-batch training
 \subsubsection{Hardware and software configurations}
-We conducte evaluation on two servers equipped with two types of GPUs, as shown in Table \ref{tab:The GPUs used for evaluation}.
-The GPU rental fee is based on Google Cloud Server~\cite{googlecloud2022}.
-Both of the server is equipped with E5-2680 v4 @ 2.4Hz, 28 cores and 256 GB main memory.
+We conduct evaluation on two servers equipped with two types of GPUs, as shown in Table \ref{tab:The GPUs used for evaluation}.
+The rental fee of GPUs is based on Google Cloud Server~\cite{googlecloud2022}.
+Both of the server are equipped with E5-2680 v4 @ 2.4Hz, 28 cores and 256 GB main memory.
 
 \begin{table}
     \centering
@@ -31,10 +31,8 @@ Both of the server is equipped with E5-2680 v4 @ 2.4Hz, 28 cores and 256 GB main
 
 
 \subsubsection{GNN configurations and graph datasets}
-Small, medium, large and oversized datasets were selected for evaluation in the experiment to ensure the universality of results.
-The datasets and their specifications are shown in Table \ref{tab:Datasets used for evaluation}.
-Four typical GNN models introduced above, GAT, GCN, GIN and GraphSAGE, were used in the experiment.
-The GNN models are implemented by PyG and DGL while ensuring model alignment (2 Conv with ReLU activation function).
+Four typical GNN models introduced above, GAT, GCN, GIN and GraphSAGE, are used in the experiment. The GNN models both have 2 layers of graph convolution with ReLU activation function, transformed by code transformer with GUC DSL, maintaining functional equivalence between frameworks.
+As shown in Table \ref{tab:Datasets used for evaluation}, the experiments involves four scales of graph datasets: small, medium, large and oversized, to improve the universality of comparison results.
 
 \begin{table}
     \vspace{-0.8cm} %调整与上文的垂直距离
@@ -62,7 +60,7 @@ The GNN models are implemented by PyG and DGL while ensuring model alignment (2 
 \end{table}
 
 \subsubsection{Comparison metrics}
-The experiment will use two GPUs to measure the performance of training multiple datasets under four GNNs, including time overhead, GPU utilization and peak memory consumption.
+The experiment involves two GPUs to measure the performance of training multiple datasets under four GNNs, including time overhead, GPU utilization and peak memory consumption.
 In addition, operator occupancy breakdown analysis will be performed to show the differences in GNNs implementation between the two frameworks.
 Finally, according to the results above, a case study on cost-efficiency under different GPUs will be conducted.
 
@@ -99,7 +97,7 @@ Finally, according to the results above, a case study on cost-efficiency under d
 \end{figure}
 
 \subsubsection{Full-graph Training}
-As shown in Figure \ref{fig:full_graph}, in full-graph training, we measure the training metrics on GPU of 128 epoches.
+As shown in Figure \ref{fig:full_graph}, in full-graph training, we measure several training metrics on GPU of 128 epoches.
 For execution time, DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training the small and medium-sized datasets which is due to framework overhead~\cite{wang2019deep}.
 For large datasets, DGL is 1.45-2.2$\times$ faster than PyG, because DGL adopts GSpMM operator to avoid generating message tensors while PyG's scatter-gather operator does(explained in Section \ref{sec:op_breakdown} Figure \ref{fig:op_breakdown}).
 It also explains why PyG runs out-of-memory in GAT on large datasets due to PPA and PROTEINS are denser and have more edge features.
