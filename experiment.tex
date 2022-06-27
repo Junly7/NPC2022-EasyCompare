@@ -60,9 +60,9 @@ As shown in Table \ref{tab:Datasets used for evaluation}, the experiments involv
 \end{table}
 
 \subsubsection{Comparison metrics}
-The experiment involves two GPUs to measure the performance of training multiple datasets under four GNNs, including time overhead, GPU utilization and peak memory consumption.
-In addition, operator occupancy breakdown analysis will be performed to show the differences in GNNs implementation between the two frameworks.
-Finally, according to the results above, a case study on cost-efficiency under different GPUs will be conducted.
+The key metrics for evaluation are time overhead, GPU utilization and peak memory consumption which will be measured through training multiple datasets under four GNNs.
+The analysis of operators focuses on the decomposition of operators' proportion which is the metric of operator breakdown.
+Based on time overhead, a case study on cost-efficiency under different GPUs will compare the pure performance and cost-efficiency.
 
 \subsection{Framework Comparison}
 \label{sec:frameworkcomp}
@@ -99,13 +99,13 @@ Finally, according to the results above, a case study on cost-efficiency under d
 \subsubsection{Full-graph Training}
 As shown in Figure \ref{fig:full_graph}, in full-graph training, we measure several training metrics on GPU of 128 epoches.
 For execution time, DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training the small and medium-sized datasets which is due to framework overhead~\cite{wang2019deep}.
-For large datasets, DGL is 1.45-2.2$\times$ faster than PyG, because DGL adopts GSpMM operator to avoid generating message tensors while PyG's scatter-gather operator does(explained in Section \ref{sec:op_breakdown} Figure \ref{fig:op_breakdown}).
-It also explains why PyG runs out-of-memory in GAT on large datasets due to PPA and PROTEINS are denser and have more edge features.
+For large datasets, DGL is 1.45-2.2$\times$ faster than PyG, because DGL's GSpMM operator (shown in Figure \ref{fig:op_breakdown_dgl}) avoids generating message tensors while PyG's scatter-gather operator does no avoidance (shown in Figure \ref{fig:op_breakdown_pyg}).
+It also explains why PyG runs out-of-memory in GAT on large datasets due to PPA and PROTEINS are denser and have more node features.
 
 For peak memory consumption, it is obvious that DGL has a more powerful memory management for GNNs that PyG consumes about 2-6$\times$ more memory than DGL.
 DGL manages to keep a low memory footprint due to its GSpMM operator fusing the message computation with aggregation.
 
-For GPU Utilization, PyG occupies GPU more frequently and completely than DGL.
+For GPU utilization, PyG occupies GPU more frequently and completely than DGL.
 PyG achieve 1.2-1.9x of more GPU Utilization.
 A deeper look at the GPU utilization curve shows that the two curves almost coincide with each other from 0 to 100\% during training.
 However, because DGL often finishes training faster, the utilization will be lower when calculating the average value.
