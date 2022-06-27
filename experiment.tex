@@ -20,8 +20,8 @@ Both of the server is equipped with E5-2680 v4 @ 2.4Hz, 28 cores and 256 GB main
             \hline
             GPU & Mem. & TFLOPS & Rental \\
             \hline
-            V100 & 16GB HBM2 & 7.8 & \$2.48\/hr \\
-            A100 & 40GB HBM2 & 9.7 & \$2.934\/hr \\
+            V100 & 16GB HBM2 & 7.8 & 2.48\$ per hour \\
+            A100 & 40GB HBM2 & 9.7 & 2.93\$ per hour \\
             \hline
         \end{tabular}
     }
@@ -126,7 +126,7 @@ For NS, sample generation and data movement can occupy up to 85\% of the total t
     \vspace{-0.5cm} %调整图片与上文的垂直距离
     \centering
     \includegraphics[width=\textwidth]{images/minibatch_time.pdf}
-    \caption{Mini-batch training of 8 epoches on V100, only shows execution time.}
+    \caption{Mini-batch training of 8 epoches on V100, only shows execution time, OOM means out-of-memory.}
     \label{fig:minibatch_time}
     \vspace{-1cm} %调整图片与下文的垂直距离
 \end{figure}
@@ -154,14 +154,14 @@ However, in \textsl{GCNConv}, it can be implemented much more memory-friendly as
     \centering
     \begin{minipage}[c]{1\textwidth}
         \includegraphics[width=\textwidth]{images/op_breakdown_dgl.pdf}
-        \subcaption{dgl breakdown}
+        \subcaption{Operator breakdown of DGL.}
         \label{fig:op_breakdown_dgl}
 
         \includegraphics[width=\textwidth]{images/op_breakdown_pyg.pdf}
-        \subcaption{pyg breakdown}
+        \subcaption{Operator breakdown of PyG.}
         \label{fig:op_breakdown_pyg}
     \end{minipage}
-    \caption{op breakdown}
+    \caption{Operator breakdown of training profile on V100, 128 epoches, OOM means out-of-memory.}
     \label{fig:op_breakdown}
     \vspace{-1cm} %调整图片与下文的垂直距离
 \end{figure}
@@ -179,14 +179,14 @@ This case study will simply explain the computing characteristics of GNNs and th
     \centering
     \begin{minipage}[c]{1\textwidth}
         \includegraphics[width=\textwidth]{images/pure_performance.pdf}
-        \subcaption{pure performance}
+        \subcaption{Pure performance.}
         \label{fig:pure_performance}
 
         \includegraphics[width=\textwidth]{images/cost_efficiency.pdf}
-        \subcaption{cost efficiency}
+        \subcaption{Cost-efficiency analysis.}
         \label{fig:cost_efficiency}
     \end{minipage}
-    \caption{op breakdown}
+    \caption{128 epoches of training on V100 and A100 based on PROTEINS.}
     \label{fig:case_study}
     \vspace{-0.8cm} %调整图片与下文的垂直距离
 \end{figure}
