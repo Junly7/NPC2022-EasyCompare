@@ -36,7 +36,7 @@ class NET {
   }
 };
   \end{lstlisting}
-  \caption{GCN implementation in GUC.}
+  \caption{\textcolor{blue}{GCN implementation in GUC.}}
   \label{fig:gcn_guc}
 \end{figure}
 
@@ -63,7 +63,7 @@ The main functional interfaces of GUC include graph convolutions, activation fun
 
 \noindent The tensor processing function applies non-linear activations to the input tensor. The activation function definitions will be transformed to corresponding interfaces in PyTorch backend.
 
-\subsubsection{Mini-batch} GUC supports mini-batch training with batch sizes. According to the batch size defined by users and fixed settings, datasets will be automatically batched with \textsl{NeighborSampler}~\cite{hamilton2017inductive}.
+\subsubsection{Mini-batch} \textcolor{blue}{GUC supports mini-batch training with batch sizes. According to the batch size defined by users and fixed settings, datasets will be automatically batched with \textsl{NeighborSampler}~\cite{hamilton2017inductive}.}
 
 \subsection{An Example: GCN Implementation}
 \label{subsec:gcn_guc}
