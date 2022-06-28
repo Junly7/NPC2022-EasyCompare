@@ -18,12 +18,13 @@ Multi-dimensional performance comparisons of GNN models are important for both u
 To this end, we propose EasyCompare to achieve high efficiency for GNN performance comparison and result analysis. First, we design a Domain Specific Language (DSL) called GUC (\underline{G}NN \underline{U}nified Language based on \underline{C}$++$), which enables the convenient definition of GNN models. Then, we develop a code transformer to automatically convert GUC DSL into execuable Python codes on DGL and PyG frameworks. Finally, we implement an integrated system that run GNN models on various GPUs and visualize performance logs for better analysis.
 
 Based on EasyCompare, we conduct extensive experiment to explore the factors that influence the performance of GNN models.
-The results show that:
+\textcolor{blue}{The results show that:}
 
-1. DGL is more memory-friendly than PyG, and runs faster due to its different selection of operators though PyG has a high GPU usage. 
+\textcolor{blue}{1. DGL is more memory-friendly than PyG, and runs faster due to its different selection of operators though PyG has a high GPU usage. }
 
-2. When dealing with datasets that are denser and have more node features, DGL tends to use GSpMM while PyG tends to use scatter-gather related operators which will generate more message tensors.
+\textcolor{blue}{2. When dealing with datasets that are denser and have more node features, DGL tends to use GSpMM while PyG tends to use scatter-gather related operators which will generate more message tensors.}
 
-3. For GPU cost-efficiency, DGL on V100 performs better than A100 while PyG on A100 performs better than V100.
+\textcolor{blue}{3. For GPU cost-efficiency, DGL on V100 performs better than A100 while PyG on A100 performs better than V100.}
+
 
 The rest of this paper is orgnized as follows. Section \ref{sec:background} presents the background of GNNs and GNN frameworks. Section \ref{sec:gnndsl}, Section \ref{sec:codetran} and Section \ref{sec:system} introduce the implementation of EasyCompare. Section \ref{sec:evaluation} presents the results of experiments based on EasyCompare, and Section \ref{sec:conclusion} concludes this paper.
