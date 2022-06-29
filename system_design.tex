@@ -34,7 +34,7 @@ For remote GPUs, EasyCompare needs to unify the runtime environment and ensure d
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/running_remote_server.pdf}
-    \caption{The flow of task running on a remote GPU.}
+    \caption{\textcolor{blue}{The flow of task running on a remote GPU.}}
     \label{fig:run_on_remote_server}
     \vspace{-0.7cm}
 \end{figure}
@@ -49,7 +49,7 @@ For remote GPUs, EasyCompare needs to unify the runtime environment and ensure d
 %At the beginning of each training task, GPU utilization statistics are collected at the same time.
 %After the task is completed, the mean value of several records is calculated to represent the GPU resource utilization of the training task.
 
-\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textsl{CE=ET/cost}, where \textsl{ET} is number of epoches per second, and \textsl{cost} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
+\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textsl{CE=ES/cost}, where \textsl{ES} is number of epoches per second, and \textsl{cost} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
 
 %\subsection{Cost-efficiency comparison of different GPU resources}
 %

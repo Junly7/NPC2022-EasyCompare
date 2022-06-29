@@ -88,7 +88,7 @@ We measure three metrics for full-graph training. For execution time (Figure \re
 
     \end{minipage}
 
-    \caption{Full-graph training comparison on V100 (OOM means out-of-memory).}
+    \caption{\textcolor{blue}{Full-graph training comparison on V100 (ET, OOM means Execution Time, out-of-memory respectively).}}
     \label{fig:full_graph}
 
     \vspace{-0.7cm} %调整图片与下文的垂直距离
@@ -124,7 +124,7 @@ Figure \ref{fig:minibatch_time} shows the execution comparison of mini-batch tra
     \vspace{-0.5cm} %调整图片与上文的垂直距离
     \centering
     \includegraphics[width=\textwidth]{images/minibatch_time.pdf}
-    \caption{Mini-batch training comparison on V100 (OOM means out-of-memory).}
+    \caption{\textcolor{blue}{Mini-batch training comparison on V100 (ET, OOM means Execution Time, out-of-memory respectively).}}
     \label{fig:minibatch_time}
     \vspace{-0.7cm} %调整图片与下文的垂直距离
 \end{figure}
@@ -164,7 +164,7 @@ It can be observed from Figure~\ref{fig:full_graph} and Figure~\ref{fig:op_break
         \subcaption{Operator breakdown of PyG}
         \label{fig:op_breakdown_pyg}
     \end{minipage}
-    \caption{Time breakdown of operators (OOM means out-of-memory).}
+    \caption{\textcolor{blue}{Time breakdown of operators (OOM means out-of-memory).}}
     \label{fig:op_breakdown}
     \vspace{-1cm} %调整图片与下文的垂直距离
 \end{figure}
@@ -178,23 +178,24 @@ One scenario the users may face is deciding which cloud GPU server to run GNN tr
 
 %Currently, most researchers consider renting cloud GPU servers to run deep learning tasks.
 %This case study will simply explain the computing characteristics of GNNs and the selection of cloud servers based on the metric results of two different GPU in Table \ref{tab:The GPUs used for evaluation}.
-
-\begin{figure}
-    \vspace{-0.8cm} %调整图片与上文的垂直距离
+\begin{figure}[!ht]
+    % \vspace{-0.8cm} %调整图片与上文的垂直距离
     \centering
-    \begin{minipage}[c]{1\textwidth}
-        \includegraphics[width=\textwidth]{images/pure_performance.pdf}
+    \begin{minipage}[c]{0.49\textwidth}
+        \includegraphics[width=1\textwidth]{images/pure_performance.pdf}
         \subcaption{Pure performance}
-        \label{fig:pure_performance}
-
-        \includegraphics[width=\textwidth]{images/cost_efficiency.pdf}
+        \label{fig:pure_performance}        
+    \end{minipage}
+    \begin{minipage}[c]{0.49\textwidth}
+        \includegraphics[width=1\textwidth]{images/cost_efficiency.pdf}
         \subcaption{Cost efficiency}
         \label{fig:cost_efficiency}
     \end{minipage}
-    \caption{Performance comparison of V100 and A100 based on PROTEINS.}
+    \caption{\textcolor{blue}{Performance comparison of V100 and A100 based on PROTEINS.}}
     \label{fig:case_study}
-    \vspace{-0.8cm} %调整图片与下文的垂直距离
+    \vspace{-0.5cm} %调整图片与下文的垂直距离
 \end{figure}
+
 
 \subsubsection{Pure Performance}
 Figure \ref{fig:pure_performance} shows the GPU comparison considering pure performance. As seen, A100 is 1.2$\times$ faster than V100 on average due to higher TFLOPS. However, GNNs are memory-intensive, and the increase in computing cores may exacerbate memory bandwidth contention. This explains why GPU utilization on V100 is lower than that on A100.
