@@ -22,7 +22,7 @@ class NET {
   void __init__(int in_feat,int out_feat) {
     super();  // Corresponding to "super().__init__()"
     // (b) Function initialization
-    conv1=GCNConv(in_feat,16,true,true);
+    conv1=GCNConv(in_feat,16,true,false);
     conv2=GCNConv(16,out_feat,false,true);
     relu1=ReLU();
     relu2=LeakyReLU(0.5);

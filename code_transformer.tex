@@ -20,7 +20,7 @@ emphstyle=\color{blue}
 class NET(nn.Module):
   def __init__(self,in_feat,out_feat):
     super().__init__()
-    self.conv1=GCNConv(in_feat,16,bias=True,normalize=True)
+    self.conv1=GCNConv(in_feat,16,bias=True,normalize=False)
     self.conv2=GCNConv(16,out_feat,bias=False,normalize=True)
     self.relu1=nn.ReLU()
     self.relu2=nn.LeakyReLU(0.5)
@@ -38,15 +38,15 @@ class NET(nn.Module):
 class NET(nn.Module):
   def __init__(self,in_feat,out_feat):
     super().__init__()
-    self.conv1=GraphConv(in_feat,16,bias=True,norm=True)
-    self.conv2=GraphConv(16,out_feat,bias=False,norm=True)
+    self.conv1=GraphConv(in_feat,16,bias=True,norm='none')
+    self.conv2=GraphConv(16,out_feat,bias=False,norm='both')
     self.relu1=nn.ReLU()
     self.relu2=nn.LeakyReLU(0.5)
 
   def forward(self, g, h):
     h=self.relu1(self.conv1(g,h))
     h=self.relu2(self.conv2(g,h))
-    return h;
+    return h
     \end{lstlisting}
     \subcaption{\centering GCN implementation in DGL}
   \end{minipage}

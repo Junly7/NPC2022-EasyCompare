@@ -30,13 +30,13 @@ h^{(k)}_i = {\rm MLP}^{(k)} \left( \left( 1+\epsilon^{(k)} \right) \cdot h^{(k-1
 \subsection{GNN Frameworks}
 \label{sec:framework}
 
-Popular GNN frameworks, including PyG and DGL, provide customized GNN interfaces and kernels that ease programming. Both PyG and DGL use deep learning (DL) frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}) as backends and reuse their neural operators as much as possible.
+Popular GNN frameworks, including PyG and DGL, provide customized GNN interfaces and kernels that ease programming. Both PyG and DGL use deep learning (DL) frameworks (e.g., PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}) as backends and reuse their neural operators as much as possible.
 
 \subsubsection{PyTorch Geometric (PyG)~\cite{fey2019fast}} PyG is a geometric deep learning extension library for PyTorch. In PyG, GNN convolutional operators are expressed as a neighborhood aggregation or message passing scheme~\cite{gilmer2017neural}:
 \begin{equation}\label{eq:pyg}
 h^{'}_i=\gamma \left( h_i, \Box _{j \in \mathcal{N}_i} \phi \left( h_i, h_j, e_{j,i} \right) \right)
 \end{equation}
-The $\Box$ denotes a differentiable, permutation invariant function such as sum, mean or max, and $\gamma$. The $\phi$ denote differentiable functions such as MLPs. The $e_{j,i}$ is an edge feature of edge $(j,i)$. PyG provides a general \textsl{MessagePassing} interface to implement novel operators by defining $\Box$, $\gamma$ and $\phi$. Moreover, the operators involved in common GNNs have been integrated into PyG.
+The $\Box$ denotes a differentiable, permutation invariant function such as sum, mean or max, and $\gamma$ and $\phi$ denote differentiable functions such as MLPs. The $e_{j,i}$ is an edge feature of edge $(j,i)$. PyG provides a general \textsl{MessagePassing} interface to implement novel operators by defining $\Box$, $\gamma$ and $\phi$. Moreover, the operators involved in common GNNs have been integrated into PyG.
 
 \subsubsection{Deep Graph Library (DGL)~\cite{wang2019deep}} DGL follows a message passing paradigm and supports multiple DL backends (i.e., PyTorch, TensorFlow and MXNet). Let $x_v \in \mathbb{R}^{d_1}$ be the feature of node $v$ and $w_e \in \mathbb{R}^{d_1}$ be the feature of edge $(u, e, v)^2$. The message passing paradigm defines two computations at step $t+1$:
 \begin{equation}\label{eq:dgl_edge_wise}
@@ -52,6 +52,6 @@ DGL distills the message passing paradigm into two sparse tensor operations: gen
 g-SDDMM$_{\mathcal{G},\phi_m}:\mathbb{R}^{\left| \mathcal{V} \right| \times d_1}, \mathbb{R}^{\left| \mathcal{V} \right| \times d_2}, \mathbb{R}^{\left| \mathcal{E} \right| \times d_3} \mapsto \mathbb{R}^{\left| \mathcal{E} \right| \times d_4}$
 \end{center}
 \begin{center}
-g-SpMM$_{\mathcal{G},\phi_z,\rho}:\mathbb{R}^{\left| \mathcal{V} \right| \times d_1}, \mathbb{R}^{\left| \mathcal{V} \right| \times d_2}, \mathbb{R}^{\left| \mathcal{E} \right| \times d_3} \mapsto \mathbb{R}^{\left| \mathcal{E} \right| \times d_4}$
+g-SpMM$_{\mathcal{G},\phi_z,\rho}:\mathbb{R}^{\left| \mathcal{V} \right| \times d_1}, \mathbb{R}^{\left| \mathcal{V} \right| \times d_2}, \mathbb{R}^{\left| \mathcal{E} \right| \times d_3} \mapsto \mathbb{R}^{\left| \mathcal{V} \right| \times d_4}$
 \end{center}
 
