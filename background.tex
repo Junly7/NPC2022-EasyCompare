@@ -15,7 +15,7 @@ h^{(k)}_i = \sigma \left( \sum_{j \in \mathcal{N}_i} \frac{1}{c_{ij}}\textbf{W}^
 \end{equation}
 
 
-\subsubsection{GraphSAGE~\cite{hamilton2017inductive}} GraphSAGE follows the same propagation rule as GCN. The difference is that GraphSAGE uniformly samples fixed-sized set of neighbors instead of using full neighborhood sets.
+\subsubsection{GraphSAGE~\cite{hamilton2017inductive}} GraphSAGE follows the same propagation rule as GCN. The difference is that GraphSAGE uniformly samples a fixed-sized set of neighbors instead of using full neighborhood sets.
 
 \subsubsection{Graph Attention Network (GAT)~\cite{velivckovic2017graph}} GAT proposes a masked self-attention layer with \textsl{multi-head attention}. Specifically, the graph attention layer with $K$ independent attention mechanisms is as follows, where $h^{'}_i$ is the output of the attention layer, $\Vert$ represents concatenation, $\alpha_{ij}$ is a normalized attention coefficient computed by the $k$-th attention mechanism.
 \begin{equation}\label{eq:gat}
@@ -30,7 +30,7 @@ h^{(k)}_i = {\rm MLP}^{(k)} \left( \left( 1+\epsilon^{(k)} \right) \cdot h^{(k-1
 \subsection{GNN Frameworks}
 \label{sec:framework}
 
-Popular GNN frameworks including PyG and DGL provide customized GNN interfaces and kernels that ease programming. Both PyG and DGL use deep learning (DL) frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}) as backends and reuse their neural operators as much as possible.
+Popular GNN frameworks, including PyG and DGL, provide customized GNN interfaces and kernels that ease programming. Both PyG and DGL use deep learning (DL) frameworks (e.g. PyTorch~\cite{paszke2019pytorch}, TensorFlow~\cite{abadi2016tensorflow} and MXNet~\cite{chen2015mxnet}) as backends and reuse their neural operators as much as possible.
 
 \subsubsection{PyTorch Geometric (PyG)~\cite{fey2019fast}} PyG is a geometric deep learning extension library for PyTorch. In PyG, GNN convolutional operators are expressed as a neighborhood aggregation or message passing scheme~\cite{gilmer2017neural}:
 \begin{equation}\label{eq:pyg}
