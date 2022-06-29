@@ -1,9 +1,13 @@
-\section{Code Transformer (1.5 pages)}
+\section{Code Transformer}
 \label{sec:codetran}
 
 In this section, we propose a code transformer based on LLVM Clang to transform GUC DSL into executable Python codes of GNN frameworks. The core idea of the transcoder is that GNNs implemented by different frameworks share the same structure defined by GUC DSL. The solution is to transform the interfaces (e.g., \textsl{GCNConv}) in GUC DSL into functionally equivalent interfaces (e.g., \textsl{GraphConv} in DGL and \textsl{GCNConv} in PyG) with necessary parameters.
 
 The Clang (the front-end of the LLVM compiler) is leveraged to modify the original code. Figure~\ref{fig:gcn_python} shows the transformed codes of the GCN example in Figure~\ref{fig:gcn_guc}, where the modification details are highlighted. The code transformer adds basic syntaxes and makes no changes to the conforming Python paradigms. More importantly, the code transformer automatically replaces GUC interfaces by the exact interfaces with corresponding parameters to maintain functional equivalence between frameworks.
+
+The code transformer supports mini-batch training with graph partitioning in addition to full-graph training. In such scenarios, datasets are automatically batched with \textsl{NeighborSampler}~\cite{hamilton2017inductive} according to user-defined settings.
+
+%GUC supports mini-batch training with batch sizes. According to the batch size defined by users and fixed settings, datasets will be automatically batched with \textsl{NeighborSampler}~\cite{hamilton2017inductive}.
 
 \lstset{
 emph={self,GraphConv,nn,bias,norm,normalize,g,edge_index},

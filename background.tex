@@ -1,4 +1,4 @@
-\section{Background (2 pages)}
+\section{Background}
 \label{sec:background}
 
 \subsection{Graph Neural Networks}
@@ -17,7 +17,7 @@ h^{(k)}_i = \sigma \left( \sum_{j \in \mathcal{N}_i} \frac{1}{c_{ij}}\textbf{W}^
 
 \subsubsection{GraphSAGE~\cite{hamilton2017inductive}} GraphSAGE follows the same propagation rule as GCN. The difference is that GraphSAGE uniformly samples fixed-sized set of neighbors instead of using full neighborhood sets.
 
-\subsubsection{Graph Attention Network (GAT)~\cite{velivckovic2017graph}} GAT proposes a masked self-attention layer with \textcolor{blue}{\textsl{multi-head attention}}. Specifically, the graph attention layer with $K$ independent attention mechanisms is as follows, where $h^{'}_i$ is the output of the attention layer, $\Vert$ represents concatenation, $\alpha_{ij}$ is a normalized attention coefficient computed by the $k$-th attention mechanism.
+\subsubsection{Graph Attention Network (GAT)~\cite{velivckovic2017graph}} GAT proposes a masked self-attention layer with \textsl{multi-head attention}. Specifically, the graph attention layer with $K$ independent attention mechanisms is as follows, where $h^{'}_i$ is the output of the attention layer, $\Vert$ represents concatenation, $\alpha_{ij}$ is a normalized attention coefficient computed by the $k$-th attention mechanism.
 \begin{equation}\label{eq:gat}
 h^{'}_i = \Vert^K_{k=1} \sigma \left( \sum_{j \in \mathcal{N}_i} \left( \alpha^k_{ij}\textbf{W}h_j \right) \right)
 \end{equation}

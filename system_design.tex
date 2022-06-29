@@ -1,9 +1,9 @@
-\section{System Design (2 pages)}
+\section{System Design}
 \label{sec:system}
 
 % 突出学术上的贡献，淡化系统的工程实现；详尽说明系统支持的功能
 
-We design a fully automated integration system EasyCompare, which supports the functions of model transformation, deployment training and visualization of multi-dimensional analysis. In the industry, OctoML \textcolor{blue}{~\cite{octoml2022}} aims to provide performance comparisons and deployment costs for model execution on specific hardwares to enrich user experience. However, OctoML focuses on traditional models implemented by DL frameworks without support for GNNs. In contrast, EasyCompare is committed to facilitating the code transformation and framework comparison of GNNs. EasyCompare also provides performance and cost-efficiency analysis of different cloud GPUs, allowing users to make informed platform choices based on their needs.
+We design a fully automated integration system EasyCompare, which supports the functions of model transformation, deployment training and visualization of multi-dimensional analysis. In the industry, OctoML~\cite{octoml2022} aims to provide performance comparisons and deployment costs for model execution on specific hardwares to enrich user experience. However, OctoML focuses on traditional models implemented by DL frameworks without support for GNNs. In contrast, EasyCompare is committed to facilitating the code transformation and framework comparison of GNNs. EasyCompare also provides performance and cost-efficiency analysis of different cloud GPUs, allowing users to make informed platform choices based on their needs.
 
 %In order to integrate the functions of model code conversion, automatic deployment training and visualization of multi-dimensional analysis results, a fully automated function integration system was designed in this experiment.
 %Similarly, OctoML aims to improve performance, speed up time-to-market, and minimize application latency while reducing deployment costs to provide a better user experience.
@@ -34,7 +34,7 @@ For remote GPUs, EasyCompare needs to unify the runtime environment and ensure d
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{images/running_remote_server.pdf}
-    \caption{\textcolor{blue}{The flow of task running on a remote GPU.}}
+    \caption{The flow of task running on a remote GPU.}
     \label{fig:run_on_remote_server}
     \vspace{-0.7cm}
 \end{figure}
@@ -42,14 +42,14 @@ For remote GPUs, EasyCompare needs to unify the runtime environment and ensure d
 \subsection{Performance Metric Collection}
 
 
-\subsubsection{GPU Utilization Calculation} During task training, EasyCompare utilizes the NVIDIA System Management Interface (\textcolor{blue}{\textsl{nvidia-smi}}) to periodically collect GPU utilization statistics. The command example is \textcolor{blue}{\textsl{nvidia-smi --query --gpu=utilization.gpu --format=csv --loop=1}}. After task completion, the statistics are averaged as the overall GPU utilization for the training task.
+\subsubsection{GPU Utilization Calculation} During task training, EasyCompare utilizes the NVIDIA System Management Interface (\textsl{nvidia-smi}) to periodically collect GPU utilization statistics. The command example is \textsl{nvidia-smi --query --gpu=utilization.gpu --format=csv --loop=1}. After task completion, the statistics are averaged as the overall GPU utilization for the training task.
 
 %For the calculation scheme of GPU utilization, we adopt the method of periodically asking \textsl{nvidia-smi} and obtaining the mean value, as shown in the following command example: \textsl{nvidia-smi --query -- gpu=utilization. Gpu --format= CSV --loop=1}.
 %It will output the current GPU utilization as a percentage every second.
 %At the beginning of each training task, GPU utilization statistics are collected at the same time.
 %After the task is completed, the mean value of several records is calculated to represent the GPU resource utilization of the training task.
 
-\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textcolor{blue}{\textsl{CE=ET/cost}}, where \textcolor{blue}{\textsl{ET}} is number of epoches per second, and \textcolor{blue}{\textsl{cost}} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
+\subsubsection{Cost Efficiency Comparison} EasyCompare makes it easy to compare the performance of GNNs implemented by different frameworks deployed to diverse GPUs. On the other hand, cost-efficiency (performance per dollar) can help users make trade-offs between cost and performance. Cost-efficiency is defined as the cost of training the same number of epoches, and the cost is often proportional to the training duration. Therefore, the formula for cost efficiency is defined as \textsl{CE=ET/cost}, where \textsl{ET} is number of epoches per second, and \textsl{cost} is determined by the cloud service provider. Furthermore, EasyCompare also gives the accuracy comparisons for secondary reference.
 
 %\subsection{Cost-efficiency comparison of different GPU resources}
 %
@@ -108,12 +108,12 @@ As mentioned above, EasyCompare integrates three main functions, including code 
     \begin{minipage}[c]{0.35\textwidth}
         \centering
         \includegraphics[width=1\textwidth]{images/pie_op_compare.jpg}
-        \subcaption{\centering \textcolor{blue}{Operator comparison with pie charts}}
+        \subcaption{\centering Operator comparison with pie charts}
         \label{fig:pie_op_compare}
     \end{minipage}
     \begin{minipage}[c]{0.47\textwidth}
         \includegraphics[width=1\textwidth]{images/same_op_compare.png}
-        \subcaption{\centering \textcolor{blue}{Comparative analysis of identical operators}}
+        \subcaption{\centering Comparative analysis of identical operators}
         \label{fig:same_op_compare}
     \end{minipage}
     \caption{Visualization of operator comparisons between GNN frameworks.}
@@ -122,7 +122,7 @@ As mentioned above, EasyCompare integrates three main functions, including code 
 \end{figure}
 
 
-\textbf{Visualization of Multi-dimensional Analysis} EasyCompare collects detailed statistics during model training. These statistics are exploited to calculate GPU utilization, conduct multi-dimensional performance comparisons, and analyze operator execution details. EasyCompare utilizes PyTorch Profiler to obtain the time breakdown of each operator occupying hardware resources in the training process. EasyCompare presents the operator comparison between DGL and PyG with pie charts (shown in \textcolor{blue}{Figure~\ref{fig:pie_op_compare}}). Further, EasyCompare provides a comparative analysis of the identical operators in the two charts (shown in \textcolor{blue}{Figure~\ref{fig:same_op_compare}}). By doing so, researchers can dig deeper into how the frameworks behave when dealing with the same model.
+\textbf{Visualization of Multi-dimensional Analysis} EasyCompare collects detailed statistics during model training. These statistics are exploited to calculate GPU utilization, conduct multi-dimensional performance comparisons, and analyze operator execution details. EasyCompare utilizes PyTorch Profiler to obtain the time breakdown of each operator occupying hardware resources in the training process. EasyCompare presents the operator comparison between DGL and PyG with pie charts (shown in Figure~\ref{fig:pie_op_compare}). Further, EasyCompare provides a comparative analysis of the identical operators in the two charts (shown in Figure~\ref{fig:same_op_compare}). By doing so, researchers can dig deeper into how the frameworks behave when dealing with the same model.
 
 %The system will collect the detailed data obtained from GNN model training under DGL and PyG, and use it to calculate GPU utilization rate (mentioned in Section 2 of this chapter), compare the performance of different GPU resources (mentioned in Section 3 of this chapter), and analyze the running details of operators and kernel functions.
 %Using the Pytorch Profiler tool, the time and proportion of hardware resources occupied by the operators used during training can be obtained, information is the same for kernel functions.

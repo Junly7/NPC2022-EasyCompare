@@ -37,7 +37,7 @@ numberbychapter={false}         % default true
 %
 \begin{document}
 %
-\title{EasyCompare: Performance Analysis System for GNN Models across GPUs}
+\title{EasyCompare: Performance Analysis System for GNN Training across GPUs}
 
 %
 %\titlerunning{Abbreviated paper title}
@@ -75,9 +75,9 @@ numberbychapter={false}         % default true
 \maketitle              % typeset the header of the contribution
 %
 \begin{abstract}
-  \textcolor{blue}{Over the years, the performance optimization of Graph Neural Netwoks (GNNs) has attracted attention. The factors affecting GNN performance include framework designs and hardware architectures (e.g. GPUs). Performance comparisons of GNN models between different GNN frameworks and GPUs are significant, while it's difficult to conduct fair comparison between GNN frameworks due to the inconsistent language styles between frameworks. To this end, we propose EasyComapre, an integrated system for efficient GNN performance comparison and result analysis. Specifically, EasyCompare first incorporates a Domain Specific Language (DSL) enabling GNN models definition. Second, EasyCompare integrates a code transformer to convert DSL into executable codes on different GNN frameworks of the same network structure. Third, EasyCompare automatically run GNN models and visualize logs for better analysis. We conduct extensive experiment to compare the performance of various GNN models between different frameworks and GPUs. The insights derived from the comparison result can help developers to explore optimization schemes for GNN frameworks.}
+Over the years, the performance optimization of Graph Neural Netwoks (GNNs) has attracted attention. The factors affecting GNN performance include framework designs and GPU architectures. However, it is difficult to conduct fair comparison between GNN frameworks due to inconsistent language styles. In addition, deploying GNN models on diverse GPUs require large engineering efforts. To this end, we propose EasyCompare, an integrated system for efficient GNN performance comparison and result analysis. EasyCompare incorporates the GUC Domain Specific Language (DSL) to unify the language styles and achieve functionally equivalent code transformation. EasyCompare also provides front-end interaction to automatically deploy GNN models and visualize perfomance logs. We conduct extensive experiments to compare the performance of various GNN models between frameworks and GPUs. The insights from experimental results can help researchers explore optimization paths for adapting GNN frameworks to GPU architectures.
 
-  \keywords{\textcolor{blue}{Performance \and GNN frameworks \and Comparison.}}
+  \keywords{GNN \and GPU \and Code Generation \and Performance Analysis}
 \end{abstract}
 %
 %
