@@ -29,7 +29,7 @@ We conduct evaluation on two servers equipped with two types of GPUs, as shown i
 
 
 \subsubsection{GNN Configurations and Graph Datasets}
-Four typical GNN models mentioned above (i.e., GAT, GCN, GIN and GraphSAGE) are used in the experiment. All GNN models have two layers with ReLU activation functions. The number of hidden units in each GNN layer is set to \textcolor{blue}{[]}. The GNN codes are written in GUC, where the code transformer guarantees functional equivalence between PyG and DGL. As seen in Table~\ref{tab:Datasets used for evaluation}, the graph datasets are divided into four scales including small, medium, large and oversized. The oversized datasets are used to evaluate mini-batch training, while others for full-graph training. We train full-graph training and min-batch training for 128 epoches and 8 epoches.
+Four typical GNN models mentioned above (i.e., GAT, GCN, GIN and GraphSAGE) are used in the experiment. All GNN models have two layers with ReLU activation functions. The number of hidden units in each GNN layer is set to \textcolor{blue}{16}. The GNN codes are written in GUC, where the code transformer guarantees functional equivalence between PyG and DGL. As seen in Table~\ref{tab:Datasets used for evaluation}, the graph datasets are divided into four scales including small, medium, large and oversized. The oversized datasets are used to evaluate mini-batch training, while others for full-graph training. We train full-graph training and min-batch training for 128 epoches and 8 epoches.
 
 
 \begin{table}
@@ -66,7 +66,7 @@ The key metrics for evaluation are execution time, GPU utilization and peak memo
 
 \subsubsection{Full-graph Training}
 
-We measure three metrics for full-graph training. For execution time (Figure \ref{fig:full_graph_time}), DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training small and medium datasets due to fixed framework overhead~\cite{wang2019deep}. DGL is 1.45$\times$-2.2$\times$ faster than PyG for large datasets. The reason is that DGL uses \textsl{GSpMM} operator to update node features simultaneously and avoids the overhead of message passing. 
+We measure three metrics for full-graph training. For execution time (Figure \ref{fig:full_graph_time}), DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training small and medium datasets due to fixed framework overhead~\cite{wang2019deep}. DGL is 1.45$\times$-2.2$\times$ faster than PyG for large datasets. The reason is that DGL uses \textsl{GSpMM} operator to update node features simultaneously and avoids the overhead of message passing.
 
 \begin{figure}
     \vspace{-0.8cm} %调整图片与上文的垂直距离
