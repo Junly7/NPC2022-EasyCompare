@@ -43,7 +43,7 @@ class NET {
 \subsection{GUC APIs}
 \label{subsec:nnapis}
 
-The primary functional interfaces of GUC include graph convolutions, activation functions, and mini-batch. In addition, GUC also involves other interfaces to implement network definition and batch training (e.g., tensor, dropout, and linear).
+The primary functional interfaces of GUC include graph convolutions and activation functions. In addition, GUC also involves other interfaces to implement network definition and batch training (e.g., tensor, dropout, and linear).
 
 %\textbf{GNN Convolution.}
 \subsubsection{Graph Convolution} Currently, GUC defines four graph convolution interfaces including \textsl{GCNConv}, \textsl{SAGEConv}, \textsl{GATConv} and \textsl{GINConv}, corresponding to GCN, GraphSAGE, GAT and GIN respectively. Each interface has at least an initialization function for layer definition and a forward propagation function for tensor processing. The forward propagation function is defined as follows:

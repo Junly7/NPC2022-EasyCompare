@@ -29,13 +29,13 @@ We evaluate two servers equipped with two types of GPUs, as shown in Table \ref{
 
 
 \subsubsection{GNN Configurations and Graph Datasets}
-Four typical GNN models mentioned above (i.e., GAT, GCN, GIN, and GraphSAGE) are used in the experiment. All GNN models have two layers with ReLU activation functions. The number of hidden units in each GNN layer is set to \textcolor{blue}{16}. The GNN codes are written in GUC, where the code transformer guarantees functional equivalence between PyG and DGL. As seen in Table~\ref{tab:Datasets used for evaluation}, the graph datasets are divided into four scales small, medium, large and oversized. The oversized datasets are used to evaluate mini-batch training, while others for full-graph training. We train full-graph training and mini-batch training for 128 epochs and 8 epochs.
+Four typical GNN models (i.e., GAT, GCN, GIN, and GraphSAGE) are used in the experiment. All GNN models have two layers with ReLU activation functions. The number of hidden units in each GNN layer is set to 16. The GNN codes are written in GUC, where the code transformer guarantees functional equivalence between PyG and DGL. As seen in Table~\ref{tab:Datasets used for evaluation}, the graph datasets are divided into four scales small, medium, large and oversized. The oversized datasets are used to evaluate mini-batch training, while others for full-graph training. We train full-graph training and mini-batch training for 128 epochs and 8 epochs.
 
 
 \begin{table}
     \centering
     \vspace{-0.8cm} %调整与上文的垂直距离
-    \caption{Datasets used for evaluation}
+    \caption{Graph datasets used for evaluation.}
     \label{tab:Datasets used for evaluation}
     \setlength{\tabcolsep}{2.mm}{
         \begin{tabular}{|c|c|c|c|c|c|}
@@ -58,7 +58,7 @@ Four typical GNN models mentioned above (i.e., GAT, GCN, GIN, and GraphSAGE) are
 \end{table}
 
 \subsubsection{Comparison Metrics}
-The critical metrics for evaluation are execution time, GPU utilization, and peak memory consumption (PMC). We analyze the time breakdown of operators when running models, thereby extracting the performance bottlenecks of GNN frameworks. In addition, we compare the pure performance and cost-efficiency of different GPUs to facilitate cloud GPU selection.
+The critical metrics are execution time (ET), GPU utilization, and peak memory consumption (PMC). We analyze the time breakdown of operators when running models, thereby extracting the performance bottlenecks of GNN frameworks. In addition, we compare the pure performance and cost-efficiency of different GPUs to facilitate cloud GPU selection.
 
 \subsection{Framework Comparison}
 \label{sec:frameworkcomp}
@@ -88,7 +88,7 @@ We measure three metrics for full-graph training. First, for execution time (Fig
 
     \end{minipage}
 
-    \caption{\textcolor{blue}{Full-graph training comparison on V100 (ET, OOM means Execution Time, out-of-memory respectively).}}
+    \caption{Full-graph training comparison on V100 (OOM means out-of-memory).}
     \label{fig:full_graph}
 
     \vspace{-0.7cm} %调整图片与下文的垂直距离
@@ -124,7 +124,7 @@ Figure \ref{fig:minibatch_time} shows the execution comparison of mini-batch tra
     \vspace{-0.5cm} %调整图片与上文的垂直距离
     \centering
     \includegraphics[width=\textwidth]{images/minibatch_time.pdf}
-    \caption{\textcolor{blue}{Mini-batch training comparison on V100 (ET, OOM means Execution Time, out-of-memory respectively).}}
+    \caption{Mini-batch training comparison on V100 (OOM means out-of-memory).}
     \label{fig:minibatch_time}
     \vspace{-0.7cm} %调整图片与下文的垂直距离
 \end{figure}
@@ -164,7 +164,7 @@ It can be observed from Figure~\ref{fig:full_graph} and Figure~\ref{fig:op_break
         \subcaption{Operator breakdown of PyG}
         \label{fig:op_breakdown_pyg}
     \end{minipage}
-    \caption{\textcolor{blue}{Time breakdown of operators (OOM means out-of-memory).}}
+    \caption{Time breakdown of operators (OOM means out-of-memory).}
     \label{fig:op_breakdown}
     \vspace{-1cm} %调整图片与下文的垂直距离
 \end{figure}
@@ -191,7 +191,7 @@ One scenario the users may face is deciding which cloud GPU server to run GNN tr
         \subcaption{Cost efficiency}
         \label{fig:cost_efficiency}
     \end{minipage}
-    \caption{\textcolor{blue}{Performance comparison of V100 and A100 based on PROTEINS.}}
+    \caption{Performance comparison of V100 and A100 based on PROTEINS.}
     \label{fig:case_study}
     \vspace{-0.5cm} %调整图片与下文的垂直距离
 \end{figure}
