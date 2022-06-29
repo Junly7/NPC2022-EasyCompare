@@ -6,7 +6,7 @@
 
 % ƫС�����ݼ�������GPU�ŵ��£�(6-8��)��full graph training���������ݼ���1-2������mini-batch training
 \subsubsection{Hardware and Software Configurations}
-We conduct evaluation on two servers equipped with two types of GPUs, as shown in Table \ref{tab:The GPUs used for evaluation}. The rental cost of GPUs is based on Google Cloud~\cite{googlecloud2022}. Both of the server are equipped with Xeon E5-2680 v4 CPUs with 28 cores and 256 GB main memory.
+We evaluate two servers equipped with two types of GPUs, as shown in Table \ref{tab:The GPUs used for evaluation}. The rental cost of GPUs is based on Google Cloud~\cite{googlecloud2022}. Both servers are equipped with Xeon E5-2680 v4 CPUs with 28 cores and 256 GB of main memory.
 
 \begin{table}
     \centering
@@ -29,7 +29,7 @@ We conduct evaluation on two servers equipped with two types of GPUs, as shown i
 
 
 \subsubsection{GNN Configurations and Graph Datasets}
-Four typical GNN models mentioned above (i.e., GAT, GCN, GIN and GraphSAGE) are used in the experiment. All GNN models have two layers with ReLU activation functions. The number of hidden units in each GNN layer is set to \textcolor{blue}{16}. The GNN codes are written in GUC, where the code transformer guarantees functional equivalence between PyG and DGL. As seen in Table~\ref{tab:Datasets used for evaluation}, the graph datasets are divided into four scales including small, medium, large and oversized. The oversized datasets are used to evaluate mini-batch training, while others for full-graph training. We train full-graph training and min-batch training for 128 epoches and 8 epoches.
+Four typical GNN models mentioned above (i.e., GAT, GCN, GIN, and GraphSAGE) are used in the experiment. All GNN models have two layers with ReLU activation functions. The number of hidden units in each GNN layer is set to \textcolor{blue}{16}. The GNN codes are written in GUC, where the code transformer guarantees functional equivalence between PyG and DGL. As seen in Table~\ref{tab:Datasets used for evaluation}, the graph datasets are divided into four scales small, medium, large and oversized. The oversized datasets are used to evaluate mini-batch training, while others for full-graph training. We train full-graph training and mini-batch training for 128 epochs and 8 epochs.
 
 
 \begin{table}
@@ -58,7 +58,7 @@ Four typical GNN models mentioned above (i.e., GAT, GCN, GIN and GraphSAGE) are 
 \end{table}
 
 \subsubsection{Comparison Metrics}
-The key metrics for evaluation are execution time, GPU utilization and peak memory consumption (PMC). We analyze the time breakdown of operators when running models, thereby extracting the performance bottlenecks of GNN frameworks. In addition, we compare the pure performance and cost efficiency of different GPUs to facilitate cloud GPU selection.
+The critical metrics for evaluation are execution time, GPU utilization, and peak memory consumption (PMC). We analyze the time breakdown of operators when running models, thereby extracting the performance bottlenecks of GNN frameworks. In addition, we compare the pure performance and cost-efficiency of different GPUs to facilitate cloud GPU selection.
 
 \subsection{Framework Comparison}
 \label{sec:frameworkcomp}
@@ -66,7 +66,7 @@ The key metrics for evaluation are execution time, GPU utilization and peak memo
 
 \subsubsection{Full-graph Training}
 
-We measure three metrics for full-graph training. For execution time (Figure \ref{fig:full_graph_time}), DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training small and medium datasets due to fixed framework overhead~\cite{wang2019deep}. DGL is 1.45$\times$-2.2$\times$ faster than PyG for large datasets. The reason is that DGL uses \textsl{GSpMM} operator to update node features simultaneously and avoids the overhead of message passing.
+We measure three metrics for full-graph training. First, for execution time (Figure \ref{fig:full_graph_time}), DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training small and medium datasets due to the fixed framework overhead~\cite{wang2019deep}. On the other hand, DGL is 1.45$\times$-2.2$\times$ faster than PyG for large datasets. The reason is that DGL uses \textsl{GSpMM} operator to update node features simultaneously and avoids the overhead of message passing.
 
 \begin{figure}
     \vspace{-0.8cm} %调整图片与上文的垂直距离
@@ -94,7 +94,7 @@ We measure three metrics for full-graph training. For execution time (Figure \re
     \vspace{-0.7cm} %调整图片与下文的垂直距离
 \end{figure}
 
-As shown in Figure \ref{fig:full_graph_memory}, PyG achieves 2$\times$-6$\times$ higher PMCs than DGL because the \textsl{scatter-gather} operator of PyG generates amounts of temporal message tensors. This also explains why PyG runs OOM in GAT on large datasets (i.e., PPA and PROTEINS). In addition, PyG achieves 1.2$\times$-1.9$\times$ higher GPU utilization than DGL (Figure \ref{fig:full_graph_gpu}). The reason is that the kernels involved in PyG are busy waiting for tensor movements, other than performing useful computation.
+As shown in Figure \ref{fig:full_graph_memory}, PyG achieves 2$\times$-6$\times$ higher PMCs than DGL because the \textsl{scatter-gather} operator of PyG generates amounts of temporal message tensors. This also explains why PyG runs OOM in GAT on large datasets (i.e., PPA and PROTEINS). In addition, PyG achieves 1.2$\times$-1.9$\times$ higher GPU utilization than DGL (Figure \ref{fig:full_graph_gpu}). The reason is that the kernels involved in PyG are busy waiting for tensor movements other than performing useful computation.
 
 %in full-graph training, we measure several training metrics on GPU of 128 epoches.
 %For execution time, DGL is slower by a small margin (8\%-15\%, except GAT in which DGL gets 1.2$\times$ faster) in training the small and medium-sized datasets which is due to framework overhead~\cite{wang2019deep}.
@@ -114,7 +114,7 @@ As shown in Figure \ref{fig:full_graph_memory}, PyG achieves 2$\times$-6$\times$
 
 
 \subsubsection{Mini-batch Training} %(on V100) Compare PyG with DGL, only execution time, 1 * 4 figures
-Figure \ref{fig:minibatch_time} shows the execution comparison of mini-batch training. We use neighbor sampling and set mini-batch size to 10,240. Compared to full-graph training, min-batch training incurs additional overhead including sample generation and Host-to-Device data swapping. Sample generation and data swapping occupy up to 85\% of the total training time. GPU utilization is generally below 30\% that accounts for significant performance degradation.
+Figure \ref{fig:minibatch_time} shows the execution comparison of mini-batch training. We use neighbor sampling and set the mini-batch size to 10,240. Compared to full-graph training, min-batch training incurs additional overhead, including sample generation and Host-to-Device data swapping. Sample generation and data swapping occupy up to 85\% of the total training time. GPU utilization is generally below 30\%, which accounts for significant performance degradation.
 
 %We use neighbor sampling (NS) and set mini-batch size to 10240 to train 8 epoches to obtain the measurement data.
 %The total execution time also depends on the cost of sample preparation, including sampling operations and data movement from CPU to GPU, compared to full graph training.
@@ -134,9 +134,9 @@ Figure \ref{fig:minibatch_time} shows the execution comparison of mini-batch tra
 \label{sec:op_breakdown}
 % (on V100) PyG, DGL, Top-10/20 operator intesection (4-6 operators each figure), 2 * 4 figures
 
-As shown in Figure~\ref{fig:op_breakdown}, the top-5 operators in each framework that account for training time are selected for horizontal comparison. As seen, the \textsl{GSpMM} operator always achieves high occupancy in DGL. For small and medium datasets, the occupancy of \textsl{GSpMM} is about 20\%, whereas it reaches 60\%-80\% for large datasets. The operator occupancies of PyG is relatively dispersed, where the \textsl{scatter-gather} operator achieves high occupancy for large datasets. The \textsl{GSpMM} operator integrates message passing and node updates to reduce memory footprint and data movements. This indicates that DGL can achieve better performance on graph dataset with more features.
+As shown in Figure~\ref{fig:op_breakdown}, the top-5 operators in each framework that account for training time are selected for horizontal comparison. The \textsl{GSpMM} operator always achieves high occupancy in DGL. For small and medium datasets, the occupancy of \textsl{GSpMM} is about 20\%, whereas it reaches 60\%-80\% for large datasets. The operator occupancies of PyG are relatively dispersed, where the \textsl{scatter-gather} operator achieves high occupancy for large datasets. The \textsl{GSpMM} operator integrates message passing and node updates to reduce memory footprint and data movements. This indicates that DGL can perform better on graph datasets with more features.
 
-It can be observed from Figure~\ref{fig:full_graph} and Figure~\ref{fig:op_breakdown} that the training performance of GAT is worse than other GNNs (i.e. high PMC, execution time and ooperator dispersion). GAT computes attention scores for each edge on node features, which makes \textsl{autograd} need to additionally hold tensors of shape \textsl{[num\_edges, num\_heads, 2*num\_features]} in memory. Even worse, all operators scale up by edges if they depend on pair-wise node features.
+It can be observed from Figure~\ref{fig:full_graph} and Figure~\ref{fig:op_breakdown} that the training performance of GAT is worse than other GNNs (i.e., high PMC, execution time, and operator dispersion). GAT computes attention scores for each edge on node features, which makes \textsl{autograd} need to additionally hold tensors of shape \textsl{[num\_edges, num\_heads, 2*num\_features]} in memory. Even worse, all operators scale up by edges if they depend on pair-wise node features.
 
 %For the DGL and PyG, we counted the proportion of operators in their respective training process and selected the top 5 operators respectively for horizontal comparison.
 %As shown in Figure \ref{fig:op_breakdown}, DGL has obvious characteristics in selecting operators.
@@ -174,7 +174,7 @@ It can be observed from Figure~\ref{fig:full_graph} and Figure~\ref{fig:op_break
 % ע��˵����EasyCompare���Է�����������ͬGPU�����ܶԱȣ������û�����GPUѡ��
 % (only full-graph training) Compare V100 with A100, considering pure performance and cost efficiency, 2 * 4 figures
 % Analyse the reasons of experiment results, from the perspective of hardware details, computational characteristics of GNNs
-One scenario the users may face is deciding which cloud GPU server to run GNN training tasks. With EasyCompare, they can make informed cloud GPU selection according to pure performance or cost efficiency. Figure~\ref{fig:case_study} shows the performance comparison of V100 and A100 based on PROTEINS, where GAT is not taken into account due to OOM in PyG. The GPU utilization is also presented above each bar.
+One scenario the users may face is deciding which cloud GPU server to run GNN training tasks. With EasyCompare, they can make informed cloud GPU selection according to pure performance or cost-efficiency. Figure~\ref{fig:case_study} shows the performance comparison of V100 and A100 based on PROTEINS, where GAT is not considered due to OOM in PyG. The GPU utilization is also presented above each bar.
 
 %Currently, most researchers consider renting cloud GPU servers to run deep learning tasks.
 %This case study will simply explain the computing characteristics of GNNs and the selection of cloud servers based on the metric results of two different GPU in Table \ref{tab:The GPUs used for evaluation}.
@@ -207,7 +207,7 @@ Figure \ref{fig:pure_performance} shows the GPU comparison considering pure perf
 %Due to the computing characteristics of GNN are memory intensive, GPU utilization on V100 is lower than that on A100.
 
 \subsubsection{Cost Efficiency}
-Figure \ref{fig:cost_efficiency} shows the GPU comparison considering cost efficiency. As seen, the selection propensities of GNN frameworks are inconsistent. DGL and PyG achieve higher cost efficiencies on V100 and A100, respectively. With EasyCompare, users can quickly analyze cost efficiency and rent an appropriate GPU server for GNN training.
+Figure \ref{fig:cost_efficiency} shows the GPU comparison considering cost-efficiency. As seen, the selection propensities of GNN frameworks are inconsistent. DGL and PyG achieve higher cost efficiencies on V100 and A100, respectively. With EasyCompare, users can quickly analyze cost efficiency and rent an appropriate GPU server for GNN training.
 %Based on the pure performance and the rental price in Table \ref{tab:The GPUs used for evaluation}.
 %We present the cost-efficiency of the two GPUs.
 %Figure \ref{fig:cost_efficiency} shows the ground truth on training GNN considering cost-efficiency.
